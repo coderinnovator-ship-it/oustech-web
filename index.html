@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAUSTECH | Unified Admission Screener</title>
+    <title>OAUSTECH | Institutional Audit Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -12,143 +12,117 @@
         :root { --oaustech-blue: #0A1C3C; --oaustech-red: #9B1C2A; --oaustech-gold: #F2B705; }
         body { background: var(--oaustech-blue); font-family: 'Plus Jakarta Sans', sans-serif; color: white; overflow-x: hidden; }
         
-        /* High-Fidelity UI */
-        .card-glass { background: rgba(10, 28, 60, 0.98); border: 2px solid rgba(255,255,255,0.05); border-top: 6px solid var(--oaustech-red); }
-        .btn-official { background: var(--oaustech-red); border-bottom: 4px solid #7D1621; transition: all 0.2s; cursor: pointer; }
-        .btn-official:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .card-glass { background: rgba(10, 28, 60, 0.98); border: 2px solid rgba(255,255,255,0.05); border-top: 8px solid var(--oaustech-red); }
+        .btn-official { background: var(--oaustech-red); border-bottom: 5px solid #7D1621; transition: all 0.2s; }
+        .btn-official:active { transform: translateY(3px); border-bottom-width: 2px; }
         
-        /* Advanced Ticker - Best Form */
-        .ticker-wrap { background: linear-gradient(90deg, #000, #1a1a1a, #000); border-bottom: 2px solid var(--oaustech-gold); padding: 12px 0; }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
-        .ticker span { display: inline-flex; align-items: center; gap: 10px; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* The Best Form Ticker */
+        .ticker-wrap { background: linear-gradient(90deg, #000, #1a1a1a, #000); border-bottom: 2px solid var(--oaustech-gold); padding: 14px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 35s linear infinite; }
+        .ticker span { display: inline-flex; align-items: center; gap: 15px; margin-right: 50px; }
+        @keyframes ticker { 0% { transform: translateX(50%); } 100% { transform: translateX(-150%); } }
 
-        /* The "Sovereign" Seal */
-        .seal-container { position: relative; width: 130px; height: 130px; margin-bottom: 1.5rem; }
+        /* Multi-Orbit Sovereign Seal */
+        .seal-container { position: relative; width: 140px; height: 140px; margin-bottom: 2rem; }
         .seal-main { 
             width: 100%; height: 100%; background: white; border-radius: 50%; 
-            border: 5px double var(--oaustech-gold); display: flex; align-items: center; 
+            border: 6px double var(--oaustech-gold); display: flex; align-items: center; 
             justify-content: center; z-index: 10; position: relative;
-            box-shadow: 0 0 40px rgba(242,183,5,0.4);
+            box-shadow: 0 0 50px rgba(242,183,5,0.3);
         }
-        .seal-text { color: var(--oaustech-blue); font-weight: 900; font-size: 1.3rem; text-align: center; line-height: 1; }
-        .seal-orbit { 
-            position: absolute; top: -15%; left: -15%; width: 130%; height: 130%; 
-            border: 2px dashed var(--oaustech-gold); border-radius: 50%; animation: spin-rev 25s linear infinite; opacity: 0.6;
-        }
-        .seal-orbit-inner { 
-            position: absolute; top: -8%; left: -8%; width: 116%; height: 116%; 
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; animation: spin 15s linear infinite;
-        }
+        .seal-text { color: var(--oaustech-blue); font-weight: 900; font-size: 1.4rem; text-align: center; line-height: 0.9; }
+        .orbit { position: absolute; border-radius: 50%; border: 1px solid var(--oaustech-gold); opacity: 0.4; }
+        .orbit-1 { top: -20%; left: -20%; width: 140%; height: 140%; border-style: dashed; animation: spin 20s linear infinite; }
+        .orbit-2 { top: -10%; left: -10%; width: 120%; height: 120%; border-style: dotted; animation: spin-rev 12s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes spin-rev { 100% { transform: rotate(-360deg); } }
 
-        .result-panel { background: rgba(0,0,0,0.5); border-left: 5px solid var(--oaustech-gold); border-radius: 2rem; border-right: 1px solid rgba(255,255,255,0.05); }
+        .result-panel { background: rgba(0,0,0,0.6); border-left: 6px solid var(--oaustech-gold); border-radius: 2.5rem; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-start pb-20">
 
     <div class="ticker-wrap w-full overflow-hidden">
-        <div class="ticker text-[10px] font-black text-yellow-400 uppercase tracking-[0.5em] gap-32">
-            <span><i class="fa-solid fa-anchor"></i> Pioneering the Blue Economy</span>
-            <span><i class="fa-solid fa-microchip"></i> Excellence in Science & Technology</span>
-            <span><i class="fa-solid fa-graduation-cap"></i> Transforming Society & Development</span>
-            <span><i class="fa-solid fa-landmark"></i> A Citadel of Innovation in Okitipupa</span>
+        <div class="ticker text-[11px] font-black text-yellow-400 uppercase tracking-[0.6em]">
+            <span><i class="fa-solid fa-crown"></i> Excellence in the Blue Economy</span>
+            <span><i class="fa-solid fa-microchip"></i> Global Industrial Transformation</span>
+            <span><i class="fa-solid fa-shield-halved"></i> Institutional Integrity Secured</span>
+            <span><i class="fa-solid fa-award"></i> OAUSTECH: Nigeria's Leading Tech Citadel</span>
         </div>
     </div>
 
     <header class="w-full max-w-xl flex flex-col items-center mt-12 mb-10 px-4 text-center">
         <div class="seal-container">
-            <div class="seal-orbit"></div>
-            <div class="seal-orbit-inner"></div>
+            <div class="orbit orbit-1"></div>
+            <div class="orbit orbit-2"></div>
             <div class="seal-main">
-                <div class="seal-text">OAUS<br><span class="text-[9px] tracking-[0.4em]">TECH</span></div>
+                <div class="seal-text">OAUS<br><span class="text-[10px] tracking-[0.5em]">TECH</span></div>
             </div>
         </div>
-        <h1 class="text-4xl font-extrabold tracking-tighter uppercase leading-none">
-            INSTITUTIONAL <span class="text-yellow-500">AUDIT</span>
+        <h1 class="text-5xl font-black tracking-tighter uppercase leading-none">
+            REGISTRY <span class="text-yellow-500">AUDIT</span>
         </h1>
-        <p class="text-slate-500 text-[10px] font-bold tracking-[0.6em] mt-3 uppercase italic">Official Eligibility Screening Portal</p>
+        <p class="text-slate-500 text-[11px] font-bold tracking-[0.7em] mt-4 uppercase italic">Official Merit Verification Portal</p>
     </header>
 
     <main class="w-full max-w-xl px-4">
-        <div class="card-glass rounded-[3.5rem] p-8 md:p-14 shadow-2xl">
-            <div class="space-y-10">
-                <div class="text-center">
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Prospective Faculty</label>
-                    <select id="facultySelect" class="w-full bg-slate-900/80 border border-slate-800 p-6 rounded-3xl text-white text-sm outline-none focus:ring-2 ring-yellow-600 transition-all appearance-none text-center">
-                        <option value="medical">Nursing / MLS / Public Health</option>
-                        <option value="computing">Computing (CS / Info Tech)</option>
-                        <option value="engineering">Engineering & Technology</option>
-                        <option value="sciences">Pure & Applied Sciences</option>
-                        <option value="management">Management Sciences</option>
-                        <option value="agric">Agriculture & Natural Resources</option>
+        <div class="card-glass rounded-[4rem] p-10 md:p-16 shadow-2xl">
+            <div class="space-y-12">
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-[0.4em] mb-5 text-center">Departmental Faculty</label>
+                    <select id="facultySelect" class="w-full bg-slate-900 border border-slate-800 p-6 rounded-3xl text-white text-sm outline-none focus:ring-2 ring-yellow-600 transition-all text-center">
+                        <option value="220">Nursing / MLS / Public Health</option>
+                        <option value="200">Computing (CS / Info Tech)</option>
+                        <option value="190">Engineering & Technology</option>
+                        <option value="180">Pure & Applied Sciences</option>
+                        <option value="170">Management Sciences</option>
+                        <option value="160">Agriculture & Natural Resources</option>
                     </select>
                 </div>
 
-                <div class="text-center">
-                    <label class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Certified UTME Performance</label>
-                    <input type="number" id="scoreInput" placeholder="000" class="w-full bg-slate-900/80 border border-slate-800 p-8 rounded-3xl text-7xl font-black text-white text-center outline-none border-b-4 border-b-yellow-600/20">
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-[0.4em] mb-5 text-center">Certified UTME Performance</label>
+                    <input type="number" id="scoreInput" placeholder="000" class="w-full bg-slate-900 border border-slate-800 p-10 rounded-[3rem] text-8xl font-black text-white text-center outline-none">
                 </div>
 
-                <button onclick="runZetraAudit()" class="w-full btn-official py-7 rounded-3xl font-black text-[11px] tracking-[0.6em] flex items-center justify-center gap-4 hover:brightness-110">
-                    <span id="btnText">EXECUTE ELIGIBILITY AUDIT</span>
-                    <div id="loader" class="hidden border-2 border-white/20 border-t-yellow-500 rounded-full w-5 h-5 animate-spin"></div>
+                <button onclick="runZetraAudit()" class="w-full btn-official py-8 rounded-[2rem] font-black text-[12px] tracking-[0.7em] flex items-center justify-center gap-5 hover:brightness-110 shadow-xl">
+                    <span id="btnText">INITIATE SYSTEM AUDIT</span>
+                    <div id="loader" class="hidden border-3 border-white/20 border-t-yellow-500 rounded-full w-6 h-6 animate-spin"></div>
                 </button>
             </div>
 
-            <div id="resultArea" class="hidden mt-14 p-10 result-panel">
-                <div id="statusLabel" class="text-sm font-black uppercase tracking-[0.3em] mb-6 flex items-center justify-center gap-3"></div>
-                <p id="narrativeText" class="text-slate-300 text-[13px] leading-relaxed mb-8 italic text-center font-medium"></p>
-                <div class="bg-black/60 p-4 rounded-2xl border border-white/5 mb-10">
-                    <p class="text-[8px] text-slate-500 font-mono uppercase tracking-widest text-center">
-                        Audit Intelligence Hash: <span id="securityHash" class="text-yellow-600 font-bold"></span>
+            <div id="resultArea" class="hidden mt-16 p-12 result-panel">
+                <div id="statusLabel" class="text-base font-black uppercase tracking-[0.4em] mb-8 flex flex-col items-center gap-4 text-center"></div>
+                <p id="narrativeText" class="text-slate-200 text-[14px] leading-relaxed mb-10 text-center font-semibold italic"></p>
+                <div class="bg-black/60 p-5 rounded-3xl border border-white/5 mb-12">
+                    <p class="text-[9px] text-slate-500 font-mono uppercase tracking-[0.3em] text-center">
+                        Registry Verification ID: <span id="securityHash" class="text-yellow-600 font-bold"></span>
                     </p>
                 </div>
-                <button onclick="exportToPDF()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-5 rounded-2xl text-[10px] font-black text-white uppercase tracking-[0.3em] transition-all shadow-lg">
-                    Download Official Audit Report
+                <button onclick="exportToPDF()" class="w-full bg-yellow-600 hover:bg-yellow-500 py-6 rounded-2xl text-[11px] font-black text-white uppercase tracking-[0.4em] transition-all">
+                    Generate Formal Audit Document
                 </button>
             </div>
         </div>
     </main>
 
-    <section class="w-full max-w-xl grid grid-cols-1 md:grid-cols-3 gap-5 px-4 mt-10 mb-12 text-center">
-        <a href="https://wa.me/2348056604409" class="group p-6 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-yellow-500 transition-all">
-            <i class="fa-solid fa-microchip text-yellow-500 mb-3 text-2xl group-hover:scale-110 transition-transform"></i>
-            <p class="text-[10px] font-black text-white uppercase tracking-widest">Zetra Support</p>
-        </a>
-        <div class="p-6 rounded-3xl bg-slate-900/50 border border-slate-800">
-            <i class="fa-solid fa-building-columns text-slate-400 mb-3 text-2xl"></i>
-            <p class="text-[10px] font-black text-white uppercase tracking-widest">OAUSTECH Registry</p>
-        </div>
-        <div class="p-6 rounded-3xl bg-slate-900/50 border border-slate-800">
-            <i class="fa-solid fa-fingerprint text-red-600 mb-3 text-2xl"></i>
-            <p class="text-[10px] font-black text-white uppercase tracking-widest">Verified Data</p>
-        </div>
-    </section>
-
-    <footer class="opacity-30 text-[9px] font-bold tracking-[0.6em] text-center px-6 max-w-lg leading-loose uppercase">
-        Engineered for Institutional Excellence by Zetra Cognitive Systems &copy; 2026
+    <footer class="mt-16 opacity-30 text-[10px] font-bold tracking-[0.7em] text-center px-10 leading-loose uppercase">
+        Citadel of Innovation &bull; Okitipupa &bull; Zetra Cognitive Systems &copy; 2026
     </footer>
 
     <script>
-        const openers = [
-            "Institutional eligibility screening finalized.", 
-            "Academic profile audit successfully processed.", 
-            "Credential merit evaluation concluded.",
-            "System analysis of performance records completed."
+        // High-End Intelligent Phrase Engine
+        const verdictHigh = [
+            "Your academic profile exhibits exceptional alignment with departmental standards.",
+            "Registry records confirm that your performance meets the threshold for competitive placement.",
+            "System analysis indicates a high degree of suitability for the selected course of study.",
+            "Candidate demonstrates the prerequisite academic merit required by the University Senate."
         ];
-        const connectors = [
-            "In alignment with current departmental quotas,", 
-            "Evaluating your statistical placement for the 2026 session,", 
-            "Analyzing your academic merit index relative to institutional standards,",
-            "Upon careful review of your UTME performance metrics,"
-        ];
-        const conclusions = [
-            "your eligibility for screening remains highly probable.", 
-            "you satisfy the core benchmarks for further processing.",
-            "maintain consistent monitoring of the official university portal.",
-            "you are encouraged to proceed with the next phase of institutional clearance."
+        const verdictLow = [
+            "Internal review suggests that further counseling is required for this specific placement.",
+            "Current statistical quotas indicate your profile is under high-priority management review.",
+            "The Registry recommends a secondary assessment of faculty eligibility based on current session trends.",
+            "Academic metrics suggest a strategic review of your course selection may be beneficial."
         ];
 
         function runZetraAudit() {
@@ -158,33 +132,36 @@
             const ldr = document.getElementById('loader');
             document.getElementById('resultArea').classList.add('hidden');
             ldr.classList.remove('hidden');
-            btn.innerText = "SCRUTINIZING RECORDS...";
+            btn.innerText = "AUTHENTICATING...";
 
             setTimeout(() => {
                 ldr.classList.add('hidden');
-                btn.innerText = "EXECUTE ELIGIBILITY AUDIT";
+                btn.innerText = "INITIATE SYSTEM AUDIT";
                 processFinalResult(parseInt(score));
-            }, 2200);
+            }, 2500);
         }
 
         function processFinalResult(score) {
-            const faculty = document.getElementById('facultySelect').options[document.getElementById('facultySelect').selectedIndex].text;
-            const o = openers[Math.floor(Math.random() * openers.length)];
-            const c = connectors[Math.floor(Math.random() * connectors.length)];
-            const cl = conclusions[Math.floor(Math.random() * conclusions.length)];
+            const facultyEl = document.getElementById('facultySelect');
+            const facultyText = facultyEl.options[facultyEl.selectedIndex].text;
+            const cutoff = parseInt(facultyEl.value);
             
-            const fullStory = `${o} ${c} ${cl} The result for ${score} in ${faculty} has been analyzed against the 2026 merit guidelines.`;
+            const isQualified = score >= cutoff;
+            const bank = isQualified ? verdictHigh : verdictLow;
+            const narrative = bank[Math.floor(Math.random() * bank.length)];
             
-            let status = score >= 198 ? "ELIGIBILITY CONFIRMED" : "ADVISORY REQUIRED";
-            let colorClass = score >= 198 ? "text-green-500" : "text-yellow-500";
-            let icon = score >= 198 ? "fa-circle-check" : "fa-circle-exclamation";
+            const fullStory = `${narrative} Your certified UTME score of ${score} has been cross-referenced with the ${facultyText} registry protocols for the 2026 session.`;
             
-            document.getElementById('statusLabel').innerHTML = `<i class="fa-solid ${icon} ${colorClass} text-xl"></i> <span class="${colorClass}">${status}</span>`;
+            let status = isQualified ? "ELIGIBILITY VERIFIED" : "ADVISORY PENDING";
+            let color = isQualified ? "text-green-500" : "text-yellow-500";
+            let icon = isQualified ? "fa-shield-check" : "fa-triangle-exclamation";
+            
+            document.getElementById('statusLabel').innerHTML = `<i class="fa-solid ${icon} ${color} text-4xl"></i> <span class="${color}">${status}</span>`;
             document.getElementById('narrativeText').innerText = fullStory;
-            document.getElementById('securityHash').innerText = 'ZTRA-' + Math.random().toString(36).substring(2, 12).toUpperCase();
+            document.getElementById('securityHash').innerText = 'OAUS-X' + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('resultArea').classList.remove('hidden');
 
-            window.currentAudit = { score, faculty, status, fullStory };
+            window.currentAudit = { score, faculty: facultyText, status, fullStory, isQualified };
         }
 
         function exportToPDF() {
@@ -192,50 +169,47 @@
             const doc = new jsPDF();
             const d = window.currentAudit;
 
-            // Deep Blue Header with Gold Border
-            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 60, 'F');
-            doc.setFillColor(242, 183, 5); doc.rect(0, 60, 210, 2, 'F');
-            
+            // Clean Registry Style PDF
+            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 65, 'F');
             doc.setTextColor(255); doc.setFontSize(22); doc.setFont("helvetica", "bold");
-            doc.text("OLUSEGUN AGAGU UNIVERSITY OF SCIENCE", 105, 25, null, null, "center");
-            doc.text("& TECHNOLOGY (OAUSTECH)", 105, 35, null, null, "center");
+            doc.text("OLUSEGUN AGAGU UNIVERSITY OF SCIENCE", 105, 30, null, null, "center");
+            doc.text("& TECHNOLOGY (OAUSTECH)", 105, 40, null, null, "center");
+            
             doc.setFontSize(10); doc.setFont("helvetica", "normal");
-            doc.text("OFFICIAL INSTITUTIONAL ELIGIBILITY AUDIT - 2026 SESSION", 105, 48, null, null, "center");
+            doc.text("OFFICIAL REGISTRY AUDIT - OFFICE OF ADMISSIONS", 105, 52, null, null, "center");
+            
+            // Grid Lines for Professionalism
+            doc.setDrawColor(242, 183, 5); doc.setLineWidth(1.5); doc.line(20, 75, 190, 75);
 
-            // Performance Analysis Section
-            doc.setTextColor(20, 20, 20); doc.setFontSize(13); doc.setFont("helvetica", "bold");
-            doc.text("CANDIDATE PERFORMANCE METRICS", 20, 80);
-            doc.line(20, 83, 190, 83);
+            doc.setTextColor(40); doc.setFontSize(14); doc.setFont("helvetica", "bold");
+            doc.text("PERFORMANCE VERIFICATION", 20, 90);
             
             doc.setFontSize(11); doc.setFont("helvetica", "normal");
-            doc.text(`UTME Score Certification: ${d.score}`, 25, 95);
-            doc.text(`Academic Faculty: ${d.faculty}`, 25, 105);
-            doc.text(`Audit Determination: ${d.status}`, 25, 115);
+            doc.text(`UTME SCORE: ${d.score}`, 25, 105);
+            doc.text(`FACULTY: ${d.faculty}`, 25, 115);
+            doc.text(`AUDIT VERDICT: ${d.status}`, 25, 125);
 
-            // Massive Institutional Hype Block
-            doc.setFillColor(245, 245, 245); doc.rect(20, 130, 170, 50, 'F');
+            // Institutional Praise - Maximized
+            doc.setFillColor(248, 249, 250); doc.rect(20, 140, 170, 50, 'F');
             doc.setTextColor(10, 28, 60); doc.setFont("helvetica", "bold");
-            doc.text("INSTITUTIONAL COMMENDATION", 105, 140, null, null, "center");
+            doc.text("INSTITUTIONAL COMMENDATION", 105, 150, null, null, "center");
             doc.setFontSize(9); doc.setFont("helvetica", "italic");
-            const praiseText = [
-                "OAUSTECH remains a beacon of industrial transformation, driving the frontiers of technology and the blue economy.",
-                "We commend the visionary leadership of the Ondo State Government and the University Management for their",
-                "unwavering commitment to academic excellence and global innovation standards.",
-                "",
-                "This audit confirms your academic alignment with the mission of this great citadel of learning."
-            ];
-            doc.text(praiseText, 105, 150, null, null, "center");
+            doc.text([
+                "The University celebrates the visionary leadership of the Ondo State Government and the",
+                "OAUSTECH Management in building a world-class citadel of industrial transformation.",
+                "This audit confirms your alignment with our mission for society and development."
+            ], 105, 160, null, null, "center");
 
-            // Result Narrative
-            doc.setTextColor(80); doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-            doc.text(doc.splitTextToSize(d.fullStory, 160), 25, 195);
+            // Narrative Verdict
+            doc.setTextColor(60); doc.setFontSize(10); doc.setFont("helvetica", "normal");
+            doc.text(doc.splitTextToSize(d.fullStory, 160), 25, 205);
 
-            // Zetra Signature Block
-            doc.setTextColor(150); doc.setFontSize(8);
-            doc.text("SYSTEM ARCHITECTURE BY ZETRA COGNITIVE SYSTEMS", 105, 275, null, null, "center");
-            doc.text("Designed for Excellence Beyond MVP Standards - Lead Architect: CoderInnovator", 105, 280, null, null, "center");
+            // Branding
+            doc.setTextColor(180); doc.setFontSize(8);
+            doc.text("ENGINEERED BY ZETRA COGNITIVE SYSTEMS | CHIEF ARCHITECT: CODERINNOVATOR", 105, 285, null, null, "center");
 
-            doc.save(`OAUSTECH_Audit_2026.pdf`);
+            // Open in new tab to avoid the "GitHub download again" page
+            window.open(doc.output('bloburl'), '_blank');
         }
     </script>
 </body>
