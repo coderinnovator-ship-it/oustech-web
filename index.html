@@ -11,151 +11,198 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         :root { --oaustech-blue: #0A1C3C; --oaustech-red: #9B1C2A; --oaustech-gold: #F2B705; }
         body { background: var(--oaustech-blue); font-family: 'Plus Jakarta Sans', sans-serif; color: white; overflow-x: hidden; }
-        .card-glass { background: rgba(10, 28, 60, 0.98); border: 2px solid rgba(255,255,255,0.05); border-top: 5px solid var(--oaustech-red); }
+        .card-glass { background: rgba(10, 28, 60, 0.98); border: 2px solid rgba(255,255,255,0.05); border-top: 6px solid var(--oaustech-red); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
         .btn-official { background: var(--oaustech-red); border-bottom: 4px solid #7D1621; transition: all 0.2s; }
-        .btn-official:active { transform: translateY(2px); border-bottom: 1px solid #7D1621; }
+        .btn-official:active { transform: scale(0.98); }
         .loader { border: 3px solid #1e293b; border-top: 3px solid var(--oaustech-gold); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .ticker-wrap { background: #000; padding: 5px 0; border-bottom: 1px solid var(--oaustech-gold); }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
-<body class="min-h-screen p-4 flex flex-col items-center justify-start pt-6">
+<body class="min-h-screen flex flex-col items-center justify-start pb-20">
 
-    <div class="w-full max-w-xl flex flex-col items-center mb-8 mt-4">
-        <div class="w-24 h-24 mb-4 bg-white rounded-full flex items-center justify-center p-2 shadow-2xl">
-            <img src="https://nuc-adm.s3.eu-central-1.amazonaws.com/logos/OAUSTECH.png" alt="OAUSTECH" class="w-20">
-        </div>
-        <div class="text-center">
-            <h1 class="text-3xl font-extrabold tracking-tighter text-white uppercase leading-none">OAUSTECH <span style="color: var(--oaustech-gold)">SCREENER</span></h1>
-            <p class="text-slate-400 text-[10px] font-bold tracking-[0.4em] mt-2 italic uppercase">For Society and Development</p>
+    <div class="ticker-wrap w-full overflow-hidden mb-6">
+        <div class="ticker text-[10px] font-bold text-yellow-400 uppercase tracking-widest gap-20">
+            <span>OAUSTECH: The citadel of excellence in Okitipupa</span>
+            <span>Unlocking the potential of the Blue Economy</span>
+            <span>Pioneering Science & Technology in Nigeria</span>
+            <span>Join the ranks of global innovators and leaders</span>
         </div>
     </div>
 
-    <div class="w-full max-w-xl mb-6 text-center italic text-blue-300 text-[11px] font-semibold px-4">
-        "Building a blue economy and technological future where excellence meets opportunity at the heart of Ondo State."
+    <div class="w-full max-w-xl flex flex-col items-center mb-8 px-4 text-center animate-in fade-in duration-700">
+        <div class="w-28 h-28 mb-5 bg-white rounded-full flex items-center justify-center p-2 shadow-[0_0_20px_rgba(242,183,5,0.3)]">
+            <img src="https://nuc-adm.s3.eu-central-1.amazonaws.com/logos/OAUSTECH.png" alt="OAUSTECH Logo" class="w-24">
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tighter uppercase leading-tight mb-2">
+            OAUSTECH <span class="text-yellow-500">AUDIT</span> SYSTEM
+        </h1>
+        <p class="text-slate-400 text-[10px] font-bold tracking-[0.5em] italic uppercase">For Society and Development</p>
     </div>
 
-    <div class="w-full max-w-xl card-glass rounded-[2.5rem] p-8 shadow-3xl mb-8">
-        <div class="mb-6">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Academic Faculty</label>
-            <select id="courseSelect" class="w-full bg-slate-900 border border-slate-800 p-4 rounded-xl text-white text-sm focus:border-red-800 outline-none">
-                <option value="medical">Nursing / MLS / Public Health</option>
-                <option value="computing">Computing (CS / Info Tech)</option>
-                <option value="engineering">Engineering & Technology</option>
-                <option value="sciences">Pure & Applied Sciences</option>
-                <option value="management">Management Sciences (Acct, Econ)</option>
-                <option value="earth">Earth Sciences (Geology)</option>
-                <option value="agric">Agriculture & Natural Resources</option>
-            </select>
+    <div class="w-full max-w-xl mb-10 px-6">
+        <div class="bg-red-950/20 border border-red-900/50 p-4 rounded-2xl text-center">
+            <p class="text-red-400 text-[11px] font-bold italic leading-relaxed">
+                "Where technology finds its home and science builds the future. OAUSTECH is not just a school—it is an engine of industrial transformation."
+            </p>
+        </div>
+    </div>
+
+    <div class="w-full max-w-xl card-glass rounded-[3rem] p-8 md:p-12 mb-8 mx-4">
+        <div class="space-y-6">
+            <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Academic Faculty</label>
+                <select id="courseSelect" class="w-full bg-slate-900 border border-slate-800 p-4 rounded-2xl text-white text-sm outline-none focus:ring-2 ring-red-500 transition-all">
+                    <option value="medical">Nursing / MLS / Public Health</option>
+                    <option value="computing">Computing (CS / Info Tech)</option>
+                    <option value="engineering">Engineering & Technology</option>
+                    <option value="sciences">Pure & Applied Sciences</option>
+                    <option value="management">Management Sciences (Acct, Econ)</option>
+                    <option value="earth">Earth Sciences (Geology)</option>
+                    <option value="agric">Agriculture & Natural Resources</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">UTME Score Certification</label>
+                <input type="number" id="jambInput" placeholder="000" class="w-full bg-slate-900 border border-slate-800 p-6 rounded-2xl text-5xl font-black text-white outline-none">
+            </div>
+
+            <button id="mainBtn" onclick="startAnalysis()" class="w-full btn-official py-6 rounded-2xl font-black text-xs tracking-[0.3em] flex items-center justify-center gap-4">
+                <span id="btnText">EXECUTE INSTITUTIONAL AUDIT</span>
+                <div id="btnLoader" class="loader hidden"></div>
+            </button>
         </div>
 
-        <div class="mb-8">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Certified UTME Score</label>
-            <input type="number" id="jambInput" placeholder="000" class="w-full bg-slate-900 border border-slate-800 p-5 rounded-xl text-4xl font-black text-white outline-none placeholder:text-slate-800">
-        </div>
-
-        <button id="mainBtn" onclick="startAnalysis()" class="w-full btn-official py-5 rounded-2xl font-black text-xs tracking-[0.2em] flex items-center justify-center gap-3">
-            <span id="btnText">EXECUTE ACADEMIC AUDIT</span>
-            <div id="btnLoader" class="loader hidden"></div>
-        </button>
-
-        <div id="resultBox" class="hidden mt-8 p-6 rounded-2xl bg-slate-900 border-l-4 border-l-red-800">
-            <div class="flex items-center gap-3 mb-4 text-[12px] font-bold uppercase tracking-widest" id="statusHeader"></div>
-            <p id="analysisBody" class="text-slate-300 text-sm leading-relaxed mb-6 italic"></p>
+        <div id="resultBox" class="hidden mt-10 p-8 rounded-3xl bg-black/40 border-l-4 border-yellow-500">
+            <div class="flex items-center gap-3 mb-4 text-[13px] font-bold uppercase tracking-widest" id="statusHeader"></div>
+            <p id="analysisBody" class="text-slate-300 text-sm leading-relaxed mb-10 italic"></p>
             
-            <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-[10px] font-bold text-white uppercase tracking-widest border border-slate-700 flex items-center justify-center gap-2 transition-all">
-                <i class="fa-solid fa-file-pdf text-red-500"></i> DOWNLOAD OFFICIAL AUDIT
+            <button onclick="generateAuditPDF()" class="w-full bg-slate-800 hover:bg-slate-700 py-4 rounded-xl text-[10px] font-extrabold text-white uppercase tracking-widest border border-slate-600 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-file-contract text-yellow-500"></i> PRINT ADMISSION PROJECTION
             </button>
         </div>
     </div>
 
-    <div class="w-full max-w-xl grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
-        <a id="techLink" href="#" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50">
-            <i class="fa-solid fa-microchip text-blue-500 mb-2"></i>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Zetra Tech</p>
-            <p class="text-[9px] text-white font-bold italic">Feedback</p>
+    <div class="w-full max-w-xl grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 px-4">
+        <a id="techLink" href="#" class="flex flex-col items-center p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500 transition-all">
+            <i class="fa-solid fa-code-branch text-blue-500 mb-2"></i>
+            <p class="text-[9px] text-white font-bold uppercase">Zetra Tech</p>
         </a>
-        <a href="tel:+2348060840326" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-red-500/50">
-            <i class="fa-solid fa-phone text-red-500 mb-2"></i>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Official Line</p>
-            <p class="text-[9px] text-white font-bold italic">Direct Call</p>
+        <a href="tel:+2348060840326" class="flex flex-col items-center p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-red-500 transition-all">
+            <i class="fa-solid fa-shield-halved text-red-500 mb-2"></i>
+            <p class="text-[9px] text-white font-bold uppercase">Registry</p>
         </a>
-        <a id="mailLink" href="#" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-white/50">
-            <i class="fa-solid fa-envelope text-slate-300 mb-2"></i>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Official Mail</p>
-            <p class="text-[9px] text-white font-bold italic">Inquiry</p>
+        <a id="mailLink" href="#" class="flex flex-col items-center p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-white transition-all">
+            <i class="fa-solid fa-paper-plane text-slate-400 mb-2"></i>
+            <p class="text-[9px] text-white font-bold uppercase">Official Mail</p>
         </a>
     </div>
 
-    <footer class="text-center pb-12 px-6">
-        <p class="text-slate-800 text-[8px] max-w-sm mx-auto uppercase leading-relaxed font-bold">
-            © 2026 ZETRA LAB SYSTEMS | INSTITUTIONAL DEPLOYMENT FOR OAUSTECH OKITIPUPA
-        </p>
+    <footer class="text-center opacity-40">
+        <p class="text-[8px] font-bold tracking-widest">© 2026 ZETRA WORLD HASH | OAUSTECH ADMISSIONS DESK</p>
     </footer>
 
     <script>
-        // Set dynamic contact links
-        const myWhatsApp = "234806604409"; // REPLACEME
-        const mailTo = "admissions@oaustech.edu.ng";
-        
-        document.getElementById('techLink').href = `https://wa.me/${myWhatsApp}?text=Hi%20Zetra%20Lab%2C%20I%20just%20used%20the%20OAUSTECH%20Screener.%20I%20have%20a%20technical%20question.`;
-        document.getElementById('mailLink').href = `mailto:${mailTo}?subject=Admission%20Inquiry%20via%20Unified%20Screener&body=Hello%20Registry%2C%20I%20calculated%20my%20eligibility%20via%20the%20Unified%20Screener%20and%20would%20like%20to%20verify%20the%20next%20steps.`;
+        // REPLACE WITH YOUR WHATSAPP NUMBER
+        const myNum = "2348056604409"; 
+        const schoolMail = "admissions@oaustech.edu.ng";
 
-        const messages = [
-            "Synchronizing with current institutional quotas... stand by.",
-            "Analyzing departmental thresholds for the 2026 session...",
-            "Mapping student profile against Faculty requirements...",
-            "Validating score integrity with Registry standards...",
-            "Executing merit-list probability algorithm..."
+        document.getElementById('techLink').href = `https://wa.me/${myNum}?text=Zetra%20Lab%2C%20I%20have%20an%20inquiry%20regarding%20the%20Audit%20System.`;
+        document.getElementById('mailLink').href = `mailto:${schoolMail}?subject=Audit%20Report%20Inquiry`;
+
+        const logs = [
+            "Accessing OAUSTECH Central Database...",
+            "Fetching Merit Quotas for 2026...",
+            "Comparing Score with Regional Benchmarks...",
+            "Applying Institutional Bonus Weights...",
+            "Finalizing Academic Projection..."
         ];
 
         function startAnalysis() {
             const score = document.getElementById('jambInput').value;
-            if (!score || score < 100) { alert("Invalid UTME score."); return; }
+            if (!score || score < 100) { alert("Invalid UTME Certification."); return; }
             
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            
-            // Random Loading Message
-            btnText.innerText = messages[Math.floor(Math.random() * messages.length)];
-            btnLoader.classList.remove('hidden');
+            const btn = document.getElementById('btnText');
+            const ldr = document.getElementById('btnLoader');
             document.getElementById('resultBox').classList.add('hidden');
 
-            setTimeout(() => {
-                btnText.innerText = "EXECUTE ACADEMIC AUDIT";
-                btnLoader.classList.add('hidden');
-                processLogic(parseInt(score));
-            }, 1800);
+            let i = 0;
+            const interval = setInterval(() => {
+                btn.innerText = logs[i];
+                ldr.classList.remove('hidden');
+                i++;
+                if(i >= logs.length) {
+                    clearInterval(interval);
+                    btn.innerText = "EXECUTE INSTITUTIONAL AUDIT";
+                    ldr.classList.add('hidden');
+                    finalizeAudit(parseInt(score));
+                }
+            }, 500);
         }
 
-        function processLogic(score) {
+        function finalizeAudit(score) {
+            const faculty = document.getElementById('courseSelect').options[document.getElementById('courseSelect').selectedIndex].text;
             const box = document.getElementById('resultBox');
-            const header = document.getElementById('statusHeader');
+            const head = document.getElementById('statusHeader');
             const body = document.getElementById('analysisBody');
             box.classList.remove('hidden');
-            
-            const highPraise = ["Excellent performance.", "Outstanding merit standing.", "Exceptional academic profile."];
-            const midPraise = ["Competitive standing.", "Solid performance.", "Good statistical placement probability."];
-            const randomPraise = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-            if (score >= 235) {
-                header.innerHTML = `<i class="fa-solid fa-star text-green-500"></i> <span class="text-green-500">Tier-1 Merit Placement</span>`;
-                body.innerText = `${randomPraise(highPraise)} Your score is within the top percentile for your selected faculty. Direct merit list placement is statistically probable.`;
-            } else if (score >= 195) {
-                header.innerHTML = `<i class="fa-solid fa-check-double text-yellow-500"></i> <span class="text-yellow-500">Competitive Supplemental</span>`;
-                body.innerText = `${randomPraise(midPraise)} You are within the competitive bracket. We advise monitoring the supplemental lists and Registry bulletins closely.`;
+            let status = ""; let color = ""; let msg = "";
+
+            if (score >= 230) {
+                status = "Tier-1 Priority Placement"; color = "text-green-500";
+                msg = `Excellent academic standing. You are among the elite candidates for ${faculty}. OAUSTECH recognizes your merit and looks forward to your contribution to our technological future.`;
+            } else if (score >= 198) {
+                status = "Merit List Contender"; color = "text-yellow-500";
+                msg = `Strong performance. Your score of ${score} places you in the competitive merit bracket for ${faculty}. Maintain focus on your registration steps.`;
             } else {
-                header.innerHTML = `<i class="fa-solid fa-circle-info text-blue-400"></i> <span class="text-blue-400">Strategic Alignment Advised</span>`;
-                body.innerText = "Your profile is optimized for the School of Agriculture or Science programs. Consider these for a guaranteed pathway into the institution.";
+                status = "Academic Re-Alignment Advised"; color = "text-blue-400";
+                msg = `A promising score. We recommend checking the School of Sciences or Earth Sciences to secure your place in the university’s 2026 intake.`;
             }
+
+            head.innerHTML = `<i class="fa-solid fa-building-columns ${color}"></i> <span class="${color}">${status}</span>`;
+            body.innerText = msg;
+            window.currentResult = { score, faculty, status, msg };
         }
 
-        async function downloadPDF() {
+        function generateAuditPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            const score = document.getElementById('jambInput').value;
-            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 45, 'F');
-            doc.setTextColor(255, 255, 255); doc.setFontSize(22); doc.text("OFFICIAL ELIGIBILITY AUDIT", 105, 25, null, null, "center");
-            doc.save(`OAUSTECH_Audit_${score}.pdf`);
+            const data = window.currentResult;
+
+            // HEADER BLOCK
+            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 50, 'F');
+            doc.setFillColor(155, 28, 42); doc.rect(0, 50, 210, 2, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22); doc.text("OLUSEGUN AGAGU UNIVERSITY", 105, 22, null, null, "center");
+            doc.setFontSize(14); doc.text("OF SCIENCE & TECHNOLOGY, OKITIPUPA", 105, 30, null, null, "center");
+            doc.setFontSize(10); doc.text("OFFICIAL ADMISSION ELIGIBILITY AUDIT", 105, 38, null, null, "center");
+
+            // BODY
+            doc.setTextColor(40, 40, 40);
+            doc.setFontSize(12);
+            doc.text(`UTME Score: ${data.score}`, 20, 70);
+            doc.text(`Target Faculty: ${data.faculty}`, 20, 80);
+            doc.text(`Evaluation Status: ${data.status}`, 20, 90);
+            doc.text(`Date of Audit: ${new Date().toLocaleDateString()}`, 20, 100);
+
+            doc.setDrawColor(200); doc.line(20, 110, 190, 110);
+            
+            doc.setFont("helvetica", "italic");
+            const splitMsg = doc.splitTextToSize(`Technical Analysis: ${data.msg}`, 170);
+            doc.text(splitMsg, 20, 120);
+
+            // FOOTER
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8); doc.setTextColor(150);
+            doc.text("NOTE: This is a provisionary report generated by the Zetra Audit System.", 105, 270, null, null, "center");
+            doc.text("Final admission is verified at the university registry upon JAMB clearance.", 105, 275, null, null, "center");
+
+            doc.save(`OAUSTECH_Audit_${data.score}.pdf`);
         }
     </script>
 </body>
