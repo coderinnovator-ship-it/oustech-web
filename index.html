@@ -8,187 +8,159 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        /* Official University Colors */
+        :root {
+            --marine-blue: #003366;
+            --brick-red: #B22222;
+        }
+
         body { background: #0a0f1d; font-family: 'Plus Jakarta Sans', sans-serif; color: white; }
-        .card-glass { background: rgba(15, 23, 42, 0.95); border: 1px solid #1e293b; border-top: 4px solid #3b82f6; }
-        .loader { border: 3px solid #1e293b; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        .card-glass { background: rgba(15, 23, 42, 0.98); border: 1px solid #1e293b; border-top: 5px solid var(--brick-red); }
+        .btn-official { background: var(--marine-blue); border-bottom: 4px solid #001a33; }
+        .loader { border: 3px solid #1e293b; border-top: 3px solid var(--brick-red); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen p-4 flex flex-col items-center justify-start pt-10">
+<body class="min-h-screen p-4 flex flex-col items-center justify-start pt-6">
 
-    <div class="w-full max-w-xl flex justify-between items-end mb-8 px-2">
-        <div>
-            <h1 class="text-2xl font-extrabold tracking-tighter text-white uppercase leading-none">OAUSTECH <span class="text-blue-500">Screener</span></h1>
-            <p class="text-slate-500 text-[9px] font-bold tracking-[0.3em] mt-2 text-blue-400">ZETRA COGNITIVE SYSTEMS</p>
+    <div class="w-full max-w-xl flex flex-col items-center mb-8">
+        <div class="w-20 h-20 mb-4 bg-white/10 rounded-full flex items-center justify-center border-2 border-dashed border-slate-700 overflow-hidden">
+            <img src="logo.png" alt="OAUSTECH" onerror="this.src='https://via.placeholder.com/150?text=LOGO'" class="w-16">
         </div>
-        <div class="text-right text-[8px] text-slate-600 font-mono uppercase italic">Secure Institutional Build</div>
+        
+        <div class="text-center">
+            <h1 class="text-2xl font-extrabold tracking-tighter text-white uppercase leading-none">OAUSTECH <span style="color: var(--brick-red)">SCREENER</span></h1>
+            <p class="text-slate-400 text-[10px] font-bold tracking-[0.4em] mt-2 italic uppercase">For Society and Development</p>
+        </div>
     </div>
 
-    <div class="w-full max-w-xl card-glass rounded-[2rem] p-8 shadow-2xl mb-6">
+    <div class="w-full max-w-xl card-glass rounded-[2.5rem] p-8 shadow-2xl mb-6">
         <div class="mb-6">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Intended Faculty/Program</label>
-            <select id="courseSelect" class="w-full bg-slate-900 border border-slate-800 p-4 rounded-xl text-white text-sm focus:border-blue-500 outline-none transition-all cursor-pointer">
-                <option value="medical">Nursing / Medical Laboratory Science</option>
-                <option value="computing">Computer Science / Information Tech</option>
-                <option value="engineering">Mechanical / Civil / Electrical Engineering</option>
-                <option value="science">Microbiology / Biochemistry / SLT</option>
-                <option value="earth">Geology / Geophysics</option>
-                <option value="agric">Agriculture / Fisheries / Food Science</option>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Academic Faculty</label>
+            <select id="courseSelect" class="w-full bg-slate-900 border border-slate-800 p-4 rounded-xl text-white text-sm focus:border-red-800 outline-none transition-all">
+                <option value="medical">Nursing / MLS / Public Health</option>
+                <option value="computing">Computing (CS / Info Tech)</option>
+                <option value="engineering">Engineering & Technology</option>
+                <option value="sciences">Pure & Applied Sciences</option>
+                <option value="management">Management Sciences (Acct, Econ)</option>
+                <option value="earth">Earth Sciences (Geology)</option>
+                <option value="agric">Agriculture & Natural Resources</option>
             </select>
         </div>
 
         <div class="mb-8">
-            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Official UTME Score</label>
-            <input type="number" id="jambInput" placeholder="000" class="w-full bg-slate-900 border border-slate-800 p-5 rounded-xl text-3xl font-black text-blue-400 focus:border-blue-500 outline-none transition-all placeholder:text-slate-800">
+            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Certified UTME Score</label>
+            <input type="number" id="jambInput" placeholder="000" 
+                   class="w-full bg-slate-900 border border-slate-800 p-5 rounded-xl text-4xl font-black text-white focus:border-red-900 outline-none transition-all placeholder:text-slate-800">
         </div>
 
-        <button id="mainBtn" onclick="startAnalysis()" class="w-full bg-blue-600 hover:bg-blue-700 py-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all flex items-center justify-center gap-3">
-            <span id="btnText">EXECUTE ANALYSIS</span>
+        <button id="mainBtn" onclick="startAnalysis()" class="w-full btn-official hover:brightness-125 py-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all flex items-center justify-center gap-3">
+            <span id="btnText">EXECUTE ACADEMIC AUDIT</span>
             <div id="btnLoader" class="loader hidden"></div>
         </button>
 
         <div id="resultBox" class="hidden mt-8 p-6 rounded-2xl bg-slate-900 border border-slate-800 animate-in fade-in zoom-in duration-500">
             <div class="flex items-center gap-3 mb-4 text-[11px] font-bold uppercase tracking-widest" id="statusHeader"></div>
-            <p id="analysisBody" class="text-slate-300 text-sm leading-relaxed mb-6"></p>
+            <p id="analysisBody" class="text-slate-400 text-sm leading-relaxed mb-6"></p>
             
-            <button onclick="downloadPDF()" class="w-full bg-blue-500/10 hover:bg-blue-500/20 py-3 rounded-xl text-[10px] font-bold text-blue-400 uppercase tracking-widest border border-blue-500/30 flex items-center justify-center gap-2 transition-all">
-                <i class="fa-solid fa-file-pdf"></i> DOWNLOAD PDF REPORT
+            <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-[10px] font-bold text-white uppercase tracking-widest border border-slate-700 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-file-pdf text-red-500"></i> GENERATE OFFICIAL REPORT
             </button>
         </div>
     </div>
 
     <div class="w-full max-w-xl grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
-        
-        <a href="https://wa.me/2348056604409" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-blue-500/50 transition-all group text-center">
-            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 mb-2">
-                <i class="fa-brands fa-whatsapp text-xs"></i>
-            </div>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Systems Hub</p>
-            <p class="text-[10px] text-white font-bold group-hover:text-blue-400">Tech Support</p>
+        <a href="https://wa.me/2348056604409" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50">
+            <i class="fa-solid fa-microchip text-blue-500 mb-2"></i>
+            <p class="text-[8px] font-bold text-slate-500 uppercase">ZETRA HUB</p>
+            <p class="text-[9px] text-white font-bold">Tech Desk</p>
         </a>
-
-        <a href="tel:+2348060840326" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-green-500/50 transition-all group text-center">
-            <div class="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 mb-2">
-                <i class="fa-solid fa-phone text-xs"></i>
-            </div>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Registry Desk</p>
-            <p class="text-[10px] text-white font-bold group-hover:text-green-400">Direct Call</p>
+        <a href="tel:+2347098809476" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-red-500/50">
+            <i class="fa-solid fa-phone text-red-500 mb-2"></i>
+            <p class="text-[8px] font-bold text-slate-500 uppercase">OFFICIAL LINE</p>
+            <p class="text-[9px] text-white font-bold">Direct Call</p>
         </a>
-
-        <a href="mailto:admissions@oaustech.edu.ng" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-purple-500/50 transition-all group text-center">
-            <div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 mb-2">
-                <i class="fa-solid fa-envelope text-xs"></i>
-            </div>
-            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Official Mail</p>
-            <p class="text-[10px] text-white font-bold group-hover:text-purple-400">Inquiry Desk</p>
+        <a href="mailto:admissions@oaustech.edu.ng" class="flex flex-col items-center p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-white/50">
+            <i class="fa-solid fa-envelope text-slate-300 mb-2"></i>
+            <p class="text-[8px] font-bold text-slate-500 uppercase">REGISTRY MAIL</p>
+            <p class="text-[9px] text-white font-bold">Email Desk</p>
         </a>
     </div>
 
-    <footer class="text-center pb-10 px-6">
-        <p class="text-slate-700 text-[9px] font-bold tracking-[0.2em] uppercase mb-4 italic">© 2026 ZETRA LAB | Institutional Deployment</p>
-        <p class="text-slate-800 text-[7px] max-w-sm mx-auto uppercase leading-loose">
-            Disclaimer: Academic advisery generated by Zetra Cognitive Systems. Final admission authority lies solely with the Joint Admissions and Matriculation Board (JAMB) and the OAUSTECH Registry.
+    <footer class="text-center pb-12 px-6">
+        <p class="text-slate-700 text-[10px] font-bold tracking-[0.2em] uppercase mb-2">© 2026 ZETRA LAB WORLDWIDE | SYSTEMS DEPLOYMENT</p>
+        <p class="text-slate-800 text-[8px] max-w-sm mx-auto leading-relaxed">
+            PROVISIONARY ADVISORY TOOL. FINAL ADMISSION IS SUBJECT TO ONDO STATE GOVERNMENT POLICY AND UNIVERSITY SENATE APPROVAL.
         </p>
     </footer>
 
     <script>
         function startAnalysis() {
-            const score = parseInt(document.getElementById('jambInput').value);
-            if (!score || score < 100 || score > 400) { alert("Please input a valid UTME score (100-400)."); return; }
-
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            const resultBox = document.getElementById('resultBox');
-
-            btnText.innerText = "RUNNING ANALYSIS...";
-            btnLoader.classList.remove('hidden');
-            resultBox.classList.add('hidden');
-
-            // 1.2s Logic Delay to simulate "Checking Database"
+            const score = document.getElementById('jambInput').value;
+            if (!score || score < 100) { alert("Please input a valid UTME score."); return; }
+            document.getElementById('btnText').innerText = "AUDITING DATA...";
+            document.getElementById('btnLoader').classList.remove('hidden');
             setTimeout(() => {
-                btnText.innerText = "EXECUTE ANALYSIS";
-                btnLoader.classList.add('hidden');
-                processLogic(score);
-            }, 1200);
+                document.getElementById('btnText').innerText = "EXECUTE ACADEMIC AUDIT";
+                document.getElementById('btnLoader').classList.add('hidden');
+                processLogic(parseInt(score));
+            }, 1500);
         }
 
         function processLogic(score) {
-            const course = document.getElementById('courseSelect').value;
+            const faculty = document.getElementById('courseSelect').value;
             const box = document.getElementById('resultBox');
             const header = document.getElementById('statusHeader');
             const body = document.getElementById('analysisBody');
-            
             box.classList.remove('hidden');
+            
             let status = ""; let msg = ""; let color = "";
 
-            if (course === 'medical') {
-                if (score >= 230) {
-                    status = "Tier 1 Eligibility"; color = "text-green-500";
-                    msg = "Academic profile meets primary competitive thresholds for Clinical Sciences. High potential for merit list consideration.";
-                } else if (score >= 198) {
-                    status = "Competitive Range"; color = "text-yellow-500";
-                    msg = "Candidate score is within the technical competitive range for the 2026 session. Supplemental review is advised.";
-                } else {
-                    status = "Academic Advisory"; color = "text-blue-400";
-                    msg = "Profile currently suggests optimized placement probability within the Faculty of Applied Sciences programs.";
-                }
+            if (faculty === 'medical') {
+                if (score >= 235) { status = "Tier-1 Merit Eligible"; color = "text-green-500"; msg = "Academic parameters match requirements for Faculty of Clinical Sciences."; }
+                else if (score >= 195) { status = "Quota Competitive"; color = "text-yellow-500"; msg = "Candidate score is within the technical range for supplemental review."; }
+                else { status = "Course Realignment"; color = "text-red-500"; msg = "Strategic shift to School of Sciences is advised for guaranteed placement."; }
             } else {
-                if (score >= 185) {
-                    status = "Directly Eligible"; color = "text-green-500";
-                    msg = "Candidate profile aligns with standard departmental requirements for the selected faculty.";
-                } else {
-                    status = "Secondary Strategy"; color = "text-yellow-500";
-                    msg = "Entry alignment is statistically optimized via Faculty of Agriculture or Earth Science programs.";
-                }
+                if (score >= 180) { status = "Verified Eligible"; color = "text-green-500"; msg = "Candidate meets institutional benchmarks for the selected faculty."; }
+                else { status = "Registry Consultation"; color = "text-yellow-500"; msg = "Placement optimized via School of Agriculture or Earth Sciences programs."; }
             }
 
-            header.innerHTML = `<i class="fa-solid fa-shield-check ${color}"></i> <span class="${color}">${status}</span>`;
+            header.innerHTML = `<i class="fa-solid fa-shield-halved ${color}"></i> <span class="${color}">${status}</span>`;
             body.innerText = msg;
-            window.currentStatus = status; 
+            window.currentStatus = status;
         }
 
         async function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const score = document.getElementById('jambInput').value;
-            const course = document.getElementById('courseSelect').options[document.getElementById('courseSelect').selectedIndex].text;
-            const status = window.currentStatus;
-            const analysis = document.getElementById('analysisBody').innerText;
-
-            // Design Header
-            doc.setFillColor(30, 58, 138); 
-            doc.rect(0, 0, 210, 40, 'F');
+            const faculty = document.getElementById('courseSelect').options[document.getElementById('courseSelect').selectedIndex].text;
+            
+            // PDF Branding
+            doc.setFillColor(0, 51, 102); // Marine Blue
+            doc.rect(0, 0, 210, 45, 'F');
+            doc.setFillColor(178, 34, 34); // Brick Red Accent
+            doc.rect(0, 42, 210, 3, 'F');
             
             doc.setTextColor(255, 255, 255);
-            doc.setFontSize(22);
-            doc.text("OAUSTECH ADMISSIONS", 105, 20, null, null, "center");
-            doc.setFontSize(10);
-            doc.text("Automated Eligibility Report | Zetra Systems Hub", 105, 30, null, null, "center");
+            doc.setFontSize(22); doc.text("OAUSTECH ADMISSIONS AUDIT", 105, 22, null, null, "center");
+            doc.setFontSize(10); doc.text("For Society and Development", 105, 32, null, null, "center");
 
             doc.setTextColor(40, 40, 40);
             doc.setFontSize(12);
-            doc.text(`Reference Date: ${new Date().toLocaleDateString()}`, 20, 55);
-            doc.text(`UTME Score: ${score}`, 20, 65);
-            doc.text(`Intended Faculty: ${course}`, 20, 75);
+            doc.text(`Report ID: ZT-${Math.floor(Math.random()*9000)+1000}`, 20, 60);
+            doc.text(`UTME Score: ${score}`, 20, 70);
+            doc.text(`Applied Faculty: ${faculty}`, 20, 80);
+            doc.text(`Status: ${window.currentStatus}`, 20, 90);
             
-            doc.setFont("helvetica", "bold");
-            doc.text(`Evaluation Status: ${status}`, 20, 95);
+            doc.setDrawColor(200, 200, 200); doc.line(20, 110, 190, 110);
             
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(11);
-            const splitText = doc.splitTextToSize(`Technical Analysis: ${analysis}`, 170);
-            doc.text(splitText, 20, 105);
-
-            doc.setDrawColor(200, 200, 200);
-            doc.line(20, 140, 190, 140);
+            doc.setFontSize(8); doc.setTextColor(150, 150, 150);
+            doc.text("Verified by Zetra Systems Hub | © 2026 OAUSTECH Institutional Portal", 105, 280, null, null, "center");
             
-            doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.text("DISCLAIMER: This document is an automated technical evaluation. Final admission authority", 105, 155, null, null, "center");
-            doc.text("rests solely with the OAUSTECH Senate and Registry. Powered by Zetra Cognitive Systems.", 105, 160, null, null, "center");
-
-            doc.save(`OAUSTECH_Report_${score}.pdf`);
+            doc.save(`OAUSTECH_Audit_${score}.pdf`);
         }
     </script>
 </body>
