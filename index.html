@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -11,14 +10,7 @@ body{background:#0A1C3C;color:white;font-family:sans-serif;}
 .card{background:#13254d;border-radius:16px;padding:16px;}
 .input{width:100%;padding:12px;border-radius:10px;background:#020617;border:1px solid #1e293b;text-align:center;}
 .btn{width:100%;padding:12px;border-radius:10px;font-weight:bold;}
-.loader{
-border:3px solid #444;
-border-top:3px solid gold;
-border-radius:50%;
-width:30px;height:30px;
-animation:spin 1s linear infinite;
-margin:auto;
-}
+.loader{border:3px solid #444;border-top:3px solid gold;border-radius:50%;width:30px;height:30px;animation:spin 1s linear infinite;margin:auto;}
 @keyframes spin{100%{transform:rotate(360deg);}}
 </style>
 </head>
@@ -29,11 +21,10 @@ margin:auto;
 <div class="text-center mt-6 max-w-sm">
 <img src="./logo.png" class="w-16 mx-auto mb-2">
 <h1 class="text-lg font-bold">
-ADMISSION <span class="text-yellow-400">SIMULATION</span>
+ADMISSION <span class="text-yellow-400">INTELLIGENCE</span>
 </h1>
 <p class="text-xs text-gray-400">
-Independent student-built tool. Not affiliated with OAUSTECH.<br>
-Final admission decisions are made by University Management.
+Independent system. Final decisions by University Management.
 </p>
 </div>
 
@@ -41,6 +32,8 @@ Final admission decisions are made by University Management.
 <div class="card w-full max-w-sm mt-5">
 
 <input id="name" placeholder="Enter Name" class="input mb-3">
+
+<label class="text-xs text-gray-400 mb-1 block">Faculty Registry Selection</label>
 
 <select id="course" class="input mb-3">
 
@@ -57,26 +50,21 @@ Final admission decisions are made by University Management.
 <option value="185">Industrial Chemistry</option>
 <option value="180">Mathematics</option>
 <option value="175">Statistics</option>
-<option value="170">Physics</option>
-<option value="170">Geophysics</option>
 </optgroup>
 
 <optgroup label="Engineering & Technology">
 <option value="200">Mechanical Engineering</option>
-<option value="195">Electrical/Electronics Engineering</option>
+<option value="195">Electrical Engineering</option>
 <option value="190">Civil Engineering</option>
 <option value="185">Chemical Engineering</option>
-<option value="185">Petroleum Engineering</option>
 <option value="180">Computer Engineering</option>
-<option value="180">Agricultural Engineering</option>
 </optgroup>
 
-<optgroup label="Agriculture & Fisheries">
+<optgroup label="Agriculture">
 <option value="180">Agricultural Economics</option>
 <option value="175">Animal Production</option>
 <option value="175">Crop Science</option>
 <option value="170">Fisheries</option>
-<option value="170">Forestry</option>
 </optgroup>
 
 </select>
@@ -85,10 +73,10 @@ Final admission decisions are made by University Management.
 
 <button onclick="run()" class="btn bg-red-700">Run Simulation</button>
 
-<!-- LOADING -->
+<!-- PROCESS -->
 <div id="loading" class="hidden mt-4 text-center">
 <div class="loader"></div>
-<p class="text-xs mt-2">Processing admission data...</p>
+<p id="stepText" class="text-xs mt-2"></p>
 </div>
 
 <!-- RESULT -->
@@ -98,8 +86,8 @@ Final admission decisions are made by University Management.
 
 <button onclick="generatePDF()" class="btn bg-yellow-500 mt-3">Download Report</button>
 
-<a id="whatsappBtn" target="_blank" class="btn bg-green-600 mt-2 text-center block">
-Export to WhatsApp
+<a id="whatsappBtn" target="_blank" class="btn bg-green-600 mt-2 block text-center">
+Share on WhatsApp
 </a>
 
 </div>
@@ -125,6 +113,13 @@ Export to WhatsApp
 
 let data={};
 
+const steps=[
+"Connecting to Admission Server...",
+"Verifying UTME Score...",
+"Checking Department Cutoff...",
+"Generating Admission Analysis..."
+];
+
 function run(){
 
 let score=parseInt(document.getElementById("score").value);
@@ -137,8 +132,15 @@ if(isNaN(score)){alert("Enter valid score");return;}
 document.getElementById("loading").classList.remove("hidden");
 document.getElementById("result").classList.add("hidden");
 
-setTimeout(()=>{
+let i=0;
 
+let interval=setInterval(()=>{
+document.getElementById("stepText").innerText=steps[i];
+i++;
+if(i>=steps.length){
+clearInterval(interval);
+
+setTimeout(()=>{
 document.getElementById("loading").classList.add("hidden");
 
 let chance=Math.max(5,Math.min(95,50+(score-cutoff)*3-25));
@@ -148,73 +150,92 @@ chance>70?"HIGH CHANCE":
 chance>50?"MODERATE":
 chance>30?"LOW":"VERY LOW";
 
+// alternatives
 let alt = score<180 ?
-"Statistics, Fisheries, Forestry" :
-"Microbiology, Industrial Chemistry, Public Health";
+["Statistics","Fisheries","Crop Science"] :
+["Microbiology","Industrial Chemistry","Public Health"];
+
+let altText=alt.join(", ");
 
 let message =
-`Admission Chance: ${chance}%\n\nAlternatives:\n${alt}`;
+`Admission Chance: ${chance}%\n\nTop Alternatives:\n${altText}`;
 
 document.getElementById("result").classList.remove("hidden");
 document.getElementById("status").innerText=status;
 document.getElementById("msg").innerText=message;
 
-// WhatsApp export
-let text = `OAUSTECH Admission Result\nName: ${document.getElementById("name").value}\nScore: ${score}\nCourse: ${course}\nChance: ${chance}%\nStatus: ${status}\nAlternatives: ${alt}`;
+// WhatsApp share
+let text = `I just checked my OAUSTECH admission chances 👇
+
+Score: ${score}
+Course: ${course}
+Chance: ${chance}%
+
+Check yours:
+https://coderinnovator-ship-it.github.io/oustech-web/`;
+
 document.getElementById("whatsappBtn").href =
-"https://wa.me/?text=" + encodeURIComponent(text);
+"https://wa.me/?text="+encodeURIComponent(text);
 
-data={name:document.getElementById("name").value,score,course,chance,status,alt};
+data={name:document.getElementById("name").value,score,course,chance,status,altText};
 
-},1500); // delay added
+},500);
+}
+
+},1000);
 
 }
 
-/* PDF */
 function generatePDF(){
 
 const {jsPDF}=window.jspdf;
 let doc=new jsPDF();
 
-// HEADER
-doc.setFillColor(10,28,60);
-doc.rect(0,0,210,40,'F');
-
-// LOGO
 let img=new Image();
 img.src="./logo.png";
 
 img.onload=function(){
 
+// header
+doc.setFillColor(10,28,60);
+doc.rect(0,0,210,40,'F');
+
 doc.addImage(img,'PNG',92,5,25,25);
 
-// TITLE BELOW LOGO
 doc.setTextColor(255);
 doc.setFontSize(12);
 doc.text("OAUSTECH ADMISSION REPORT",105,35,null,null,"center");
 
-// BODY BOX
-doc.setDrawColor(200);
-doc.rect(15,50,180,120);
-
+// sections
 doc.setTextColor(0);
 doc.setFontSize(11);
 
-doc.text(`Name: ${data.name}`,20,65);
-doc.text(`Score: ${data.score}`,20,75);
-doc.text(`Course: ${data.course}`,20,85);
+// Candidate Info
+doc.text("Candidate Information",20,60);
+doc.line(20,62,190,62);
 
-doc.text(`Chance: ${data.chance}%`,20,105);
-doc.text(`Status: ${data.status}`,20,115);
+doc.text(`Name: ${data.name}`,20,70);
+doc.text(`Score: ${data.score}`,20,80);
+doc.text(`Course: ${data.course}`,20,90);
 
-doc.text("Alternatives:",20,130);
-doc.text(data.alt,20,140,{maxWidth:160});
+// Analysis
+doc.text("Admission Analysis",20,110);
+doc.line(20,112,190,112);
 
-// FOOTER
+doc.text(`Chance: ${data.chance}%`,20,120);
+doc.text(`Status: ${data.status}`,20,130);
+
+// Recommendation
+doc.text("Recommended Alternatives",20,150);
+doc.line(20,152,190,152);
+
+doc.text(data.altText,20,160,{maxWidth:170});
+
+// footer
 doc.setFontSize(8);
 doc.setTextColor(120);
 
-doc.text("Final admission decisions are made by University Management.",105,270,null,null,"center");
+doc.text("Final decisions are made by University Management.",105,270,null,null,"center");
 doc.text("Powered by Zetra Lab",105,280,null,null,"center");
 
 doc.save("OAUSTECH_Report.pdf");
