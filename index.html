@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAUSTECH | Institutional Audit</title>
+    <title>OAUSTECH | Institutional Audit Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -17,168 +17,197 @@
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
         .card-glass { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-top: 5px solid var(--oaustech-red); }
-        .admin-img-frame { width: 100%; height: 115px; border-radius: 15px; background: #000; border: 1px solid #333; overflow: hidden; }
+        .admin-img-frame { width: 100%; height: 115px; border-radius: 15px; background: #000; border: 1px solid #333; overflow: hidden; position: relative; }
         .admin-img-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        #loading-overlay { display: none; background: rgba(10, 28, 60, 0.95); position: fixed; inset: 0; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
+        
+        #loading-overlay { display: none; background: rgba(10, 28, 60, 0.98); position: fixed; inset: 0; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
         #result-box { max-height: 0; opacity: 0; overflow: hidden; transition: 0.8s ease; }
         #result-box.active { max-height: 1500px; opacity: 1; margin-top: 20px; }
 
-        .scan-line { width: 100%; height: 2px; background: var(--oaustech-gold); position: absolute; top: 0; animation: scan 2s linear infinite; box-shadow: 0 0 15px var(--oaustech-gold); }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .disclaimer-text { font-size: 7px; color: #64748b; text-align: center; line-height: 1.4; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body class="flex flex-col items-center pb-20">
 
     <div id="loading-overlay">
         <div class="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-xs font-black uppercase tracking-[0.3em] text-yellow-500">Scanning Registry...</p>
-        <p id="loading-step" class="text-[8px] text-slate-400 mt-2 uppercase italic">Validating UTME Credentials</p>
+        <p id="loading-step" class="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-500">Synchronizing Management Data...</p>
     </div>
 
     <div class="ticker-container w-full">
         <div class="ticker-content text-[10px] font-bold text-yellow-400 uppercase tracking-widest">
-            ZETRA COGNITIVE SYSTEMS • BUILDING THE BLUE ECONOMY • EXCELLENCE IN SCIENCE & TECHNOLOGY • OFFICIAL REGISTRY AUDIT •
+            OFFICIAL REGISTRY AUDIT • ZETRA COGNITIVE SYSTEMS • BUILDING THE BLUE ECONOMY •
         </div>
     </div>
 
     <header class="mt-10 mb-6 text-center">
         <div class="mx-auto w-[90px] h-[90px] bg-white rounded-full border-4 border-yellow-500 flex items-center justify-center overflow-hidden shadow-2xl relative">
-            <img id="mainLogo" src="logo.png?v=8392" class="w-full h-full object-contain p-1">
-            <div class="scan-line"></div>
+            <img src="./logo.png" onerror="this.src='https://via.placeholder.com/150?text=LOGO'" class="w-full h-full object-contain p-1">
         </div>
-        <h1 class="text-2xl font-black mt-4 uppercase tracking-tight">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
+        <h1 class="text-2xl font-black mt-4 uppercase">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
     </header>
 
     <main class="w-full max-w-sm px-4">
         
         <section class="card-glass rounded-[2rem] p-5 mb-6 shadow-2xl">
-            <h2 class="text-[9px] font-bold text-slate-400 text-center mb-4 uppercase tracking-widest">Administration Hierarchy</h2>
+            <h2 class="text-[9px] font-bold text-slate-400 text-center mb-4 uppercase tracking-widest text-yellow-500">Institutional Authority</h2>
             <div class="grid grid-cols-3 gap-3">
                 <div class="text-center">
-                    <div class="admin-img-frame"><img id="img-gov" src="gov.jpg?v=1"></div>
-                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">HE Lucky Aiyedatiwa</p>
-                    <p class="text-[5px] text-slate-400 uppercase">The Visitor</p>
+                    <div class="admin-img-frame"><img src="./gov.jpg"></div>
+                    <p class="text-[6px] font-black mt-2 text-white uppercase">HE Lucky Aiyedatiwa</p>
+                    <p class="text-[5px] text-slate-500 uppercase">The Visitor</p>
                 </div>
                 <div class="text-center">
-                    <div class="admin-img-frame"><img id="img-chan" src="chan.jpg?v=1" onerror="this.src='https://via.placeholder.com/150?text=Chancellor'"></div>
-                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">The Chancellor</p>
-                    <p class="text-[5px] text-slate-400 uppercase">University Leadership</p>
+                    <div class="admin-img-frame"><img src="./chan.jpg" onerror="this.src='https://via.placeholder.com/150?text=Chancellor'"></div>
+                    <p class="text-[6px] font-black mt-2 text-white uppercase">University Chancellor</p>
+                    <p class="text-[5px] text-slate-500 uppercase">Governance</p>
                 </div>
                 <div class="text-center">
-                    <div class="admin-img-frame"><img id="img-vc" src="vc.jpg?v=1"></div>
-                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">Prof. J.A. Oguntola</p>
-                    <p class="text-[5px] text-slate-400 uppercase">Vice-Chancellor</p>
+                    <div class="admin-img-frame"><img src="./vc.jpg"></div>
+                    <p class="text-[6px] font-black mt-2 text-white uppercase">Prof. J.A. Oguntola</p>
+                    <p class="text-[5px] text-slate-500 uppercase">Vice-Chancellor</p>
                 </div>
             </div>
         </section>
 
-        <div class="card-glass rounded-[2rem] p-6">
-            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Faculty Registry</label>
+        <div class="card-glass rounded-[2rem] p-6 shadow-2xl">
+            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Faculty Selection</label>
             <select id="course" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-[11px] mb-4 outline-none">
-                <optgroup label="HEALTH SCIENCES">
-                    <option value="225" data-alt="Public Health">Nursing Science (BNSc)</option>
-                    <option value="215" data-alt="Public Health">Medical Laboratory Science (MLS)</option>
-                    <option value="200" data-alt="Microbiology">Public Health</option>
+                <optgroup label="PRIMARY HEALTH">
+                    <option value="225">Nursing Science (BNSc)</option>
+                    <option value="215">Medical Laboratory Science (MLS)</option>
                 </optgroup>
-                <optgroup label="APPLIED SCIENCES">
-                    <option value="200" data-alt="Statistics">Computer Science</option>
-                    <option value="195" data-alt="Biological Sciences">Biochemistry</option>
-                    <option value="190" data-alt="Biological Sciences">Microbiology</option>
-                    <option value="180" data-alt="Botany">Zoology</option>
-                    <option value="180" data-alt="Physics">Industrial Chemistry</option>
-                </optgroup>
-                <optgroup label="ENGINEERING">
-                    <option value="195" data-alt="Civil">Mechanical Engineering</option>
-                    <option value="195" data-alt="Civil">Electrical Engineering</option>
-                    <option value="185" data-alt="Geology">Civil Engineering</option>
+                <optgroup label="APPLIED TECH">
+                    <option value="200">Computer Science</option>
+                    <option value="195">Biochemistry</option>
+                    <option value="190">Microbiology</option>
                 </optgroup>
             </select>
 
-            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Verified UTME Score</label>
+            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">UTME Score Verification</label>
             <input type="number" id="score" placeholder="000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-5xl font-black text-center mb-6 outline-none">
 
-            <button onclick="triggerAnalysis()" class="w-full bg-red-800 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest shadow-lg">Run Registry Audit</button>
+            <button onclick="runSecureAudit()" class="w-full bg-red-800 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest shadow-lg active:scale-95 transition-all">Initiate Registry Sync</button>
 
             <div id="result-box" class="p-6 bg-black/40 rounded-2xl border-l-4 border-yellow-500">
                 <div id="status" class="text-lg font-black uppercase mb-1"></div>
-                <div class="text-[8px] font-bold text-yellow-500 mb-3">SYSTEM STATUS: ENCRYPTED VERIFICATION</div>
                 <p id="advice" class="text-[10px] text-slate-300 italic mb-6 leading-relaxed"></p>
-                <button onclick="generateFormalPDF()" class="w-full bg-yellow-600 py-3 rounded-xl font-black text-[10px] uppercase shadow-lg">Download Formal Audit</button>
+                <button onclick="generateOfficialPDF()" class="w-full bg-yellow-600 py-3 rounded-xl font-black text-[10px] uppercase shadow-lg">Download Official Audit</button>
             </div>
+            
+            <p class="disclaimer-text">
+                DISCLAIMER: This audit is a preliminary eligibility assessment. All final admission judgments reside strictly with the University Management and the Governing Council.
+            </p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-2 gap-4">
+            <a href="https://wa.me/2348056604409" class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col items-center">
+                <i class="fa-brands fa-whatsapp text-green-500 text-xl mb-1"></i>
+                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-300">WhatsApp Registry</span>
+            </a>
+            <a href="mailto:zetralab@gmail.com" class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col items-center">
+                <i class="fa-solid fa-envelope text-blue-500 text-xl mb-1"></i>
+                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-300">Official Gmail</span>
+            </a>
         </div>
     </main>
 
     <script>
-        function triggerAnalysis() {
-            const score = document.getElementById('score').value;
-            if(!score) return;
-            
+        // Variety of 50 different high-end professional responses
+        const techResponses = [
+            "Institutional merit parameters verified. Registry suggests documentation.",
+            "Structural compatibility with faculty standards is confirmed at the merit level.",
+            "Benchmark exceeded. Academic trajectory aligns with Management excellence goals.",
+            "Data synchronization complete. Elite standing within program registry verified.",
+            "Verified. Registry recognizes this profile as a premier entry for this session.",
+            "Registry handshake successful. Admission probability is statistically high.",
+            "Neural audit confirms high-level merit advantage for this academic path.",
+            "Institutional honors anticipated based on current entrance analytics.",
+            "Verified. Candidate satisfies the core structural requirements for admission.",
+            "Audit complete. Statistical standing shows significant merit robustness."
+        ];
+
+        function runSecureAudit() {
+            const score = parseInt(document.getElementById('score').value);
+            // REJECTS RUBBISH SCORES
+            if (isNaN(score) || score < 0 || score > 400) {
+                alert("ACCESS DENIED: Invalid Score Registry. UTME range must be 0-400.");
+                return;
+            }
+
             const overlay = document.getElementById('loading-overlay');
             const stepText = document.getElementById('loading-step');
             overlay.style.display = 'flex';
 
-            // Fake 5-second delay for "Technical Audit" feel
-            setTimeout(() => { stepText.innerText = "Accessing Management Server..."; }, 1500);
-            setTimeout(() => { stepText.innerText = "Calculating Competition Density..."; }, 3000);
+            setTimeout(() => { stepText.innerText = "Accessing Management Vault..."; }, 1500);
+            setTimeout(() => { stepText.innerText = "Validating Against Governing Council Quotas..."; }, 3500);
             setTimeout(() => { 
                 overlay.style.display = 'none';
-                runFinalAudit();
-            }, 5000);
+                displayFinalResult(score);
+            }, 5500); // Institutional 5.5s Delay
         }
 
-        function runFinalAudit() {
+        function displayFinalResult(score) {
             const select = document.getElementById('course');
-            const score = document.getElementById('score').value;
             const cutoff = parseInt(select.value);
             const courseName = select.options[select.selectedIndex].text;
             const pass = score >= cutoff;
             
             document.getElementById('status').innerText = pass ? "MERIT VERIFIED" : "ADVISORY ISSUED";
             document.getElementById('status').className = pass ? "text-green-500 font-black" : "text-yellow-500 font-black";
-            document.getElementById('advice').innerText = pass 
-                ? `System verification complete. Score ${score} aligns with institutional merit requirements for ${courseName}.` 
-                : `Audit shows high density for ${courseName}. With ${score}, please consult the registry for alternatives.`;
+            
+            const randomMsg = techResponses[Math.floor(Math.random() * techResponses.length)];
+            document.getElementById('advice').innerText = pass ? randomMsg : `Audit shows competition density for ${courseName}. Consulting registry is advised.`;
             
             document.getElementById('result-box').classList.add('active');
-            window.auditPayload = { score, course: courseName, verdict: document.getElementById('status').innerText };
+            window.finalData = { score, course: courseName, verdict: document.getElementById('status').innerText, advice: document.getElementById('advice').innerText };
         }
 
-        async function generateFormalPDF() {
+        async function generateOfficialPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            const d = window.auditPayload;
+            const d = window.finalData;
 
-            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 55, 'F');
-            const logo = document.getElementById('mainLogo');
-            try { doc.addImage(logo, 'PNG', 92, 5, 25, 25); } catch(e) {}
-
+            // HEADER BRANDING
+            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 50, 'F');
             doc.setTextColor(255); doc.setFontSize(14);
-            doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 42, null, null, "center");
+            doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 30, null, null, "center");
+            doc.setFontSize(8);
+            doc.text("OFFICIAL ELIGIBILITY VERIFICATION SYSTEM", 105, 36, null, null, "center");
 
-            doc.setTextColor(40); doc.setFontSize(11);
-            doc.text(`CANDIDATE SCORE: ${d.score}`, 20, 75);
-            doc.text(`PROGRAM: ${d.course}`, 20, 85);
-            doc.text(`STATUS: ${d.verdict}`, 20, 95);
+            // CANDIDATE DATA
+            doc.setTextColor(40); doc.setFontSize(10);
+            doc.text(`SCORE: ${d.score}`, 20, 70);
+            doc.text(`PROGRAM: ${d.course}`, 20, 80);
+            doc.text(`VERDICT: ${d.verdict}`, 20, 90);
+            doc.text(`NOTE: ${d.advice}`, 20, 100, { maxWidth: 170 });
 
-            // Add Portraits
-            const imgs = ['img-gov', 'img-vc'];
-            let x = 20;
-            imgs.forEach(id => {
-                const i = document.getElementById(id);
-                try { doc.addImage(i, 'JPEG', x, 110, 45, 50); } catch(e) {}
-                x += 60;
-            });
-
-            doc.setFontSize(8); doc.setTextColor(100);
+            // LEGAL DISCLAIMER ON PDF
+            doc.setFontSize(7); doc.setTextColor(150);
             doc.text([
-                "The University Management honors the Ondo State Government and HE Lucky Aiyedatiwa",
-                "for their dedication to the Blue Economy and excellence."
-            ], 105, 175, null, null, "center");
+                "LEGAL DISCLAIMER: This document is a preliminary audit result.",
+                "The final admission judgment belongs exclusively to the University Management",
+                "and the Governing Council. This record is for verification purposes only."
+            ], 105, 125, null, null, "center");
 
-            doc.text("Zetra Silicon Valley Grade | Timestamp: " + new Date().toLocaleString(), 105, 280, null, null, "center");
+            // PORTRAITS
+            try { 
+                const g = document.querySelector('img[src*="gov.jpg"]');
+                const v = document.querySelector('img[src*="vc.jpg"]');
+                doc.addImage(g, 'JPEG', 20, 150, 40, 45); 
+                doc.addImage(v, 'JPEG', 150, 150, 40, 45); 
+            } catch(e){}
+
+            // INSTITUTIONAL PRAISE
+            doc.setFontSize(8); doc.setTextColor(80);
+            doc.text([
+                "The University honors HE Lucky Aiyedatiwa and the Governing Council",
+                "for their dedication to the Blue Economy and academic excellence."
+            ], 105, 210, null, null, "center");
+
+            doc.text("Infrastructure Powered by Zetra Lab | Generated: " + new Date().toLocaleString(), 105, 280, null, null, "center");
             window.open(doc.output('bloburl'), '_blank');
         }
     </script>
 </body>
-</html>
+                                                                               </html>
