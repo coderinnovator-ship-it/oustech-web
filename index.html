@@ -10,9 +10,9 @@
 
 <style>
 body{background:#0A1C3C;color:white;font-family:sans-serif;}
-.card{background:rgba(255,255,255,0.05);border-radius:20px;padding:18px;}
-.input{width:100%;padding:14px;border-radius:12px;background:black;border:1px solid #1e293b;text-align:center;}
-.input:focus{border-color:gold;outline:none;}
+.card{background:rgba(255,255,255,0.06);border-radius:20px;padding:18px;}
+.input{width:100%;padding:14px;border-radius:12px;background:#020617;border:1px solid #1e293b;text-align:center;}
+.input:focus{border-color:#facc15;outline:none;}
 .btn{width:100%;padding:14px;border-radius:12px;font-weight:bold;}
 #resultBox{display:none;}
 .ticker{overflow:hidden;white-space:nowrap;background:black;border-bottom:2px solid gold;}
@@ -21,9 +21,9 @@ body{background:#0A1C3C;color:white;font-family:sans-serif;}
 </style>
 </head>
 
-<body class="flex flex-col items-center">
+<body class="flex flex-col items-center pb-16">
 
-<!-- SLOGAN -->
+<!-- TICKER -->
 <div class="ticker w-full">
 <span class="text-yellow-400 text-xs font-bold">
 OAUSTECH • FOR SOCIETY AND DEVELOPMENT • EXCELLENCE IN SCIENCE & TECHNOLOGY •
@@ -32,11 +32,11 @@ OAUSTECH • FOR SOCIETY AND DEVELOPMENT • EXCELLENCE IN SCIENCE & TECHNOLOGY 
 
 <!-- HEADER -->
 <div class="mt-6 text-center">
-<img src="./logo.png" class="w-20 mx-auto mb-2 rounded-full border-4 border-yellow-500 bg-white p-1">
-<h1 class="text-xl font-bold">ADMISSION <span class="text-yellow-400">INTELLIGENCE</span></h1>
+<img src="./logo.png" class="w-20 mx-auto rounded-full border-4 border-yellow-500 bg-white p-1">
+<h1 class="text-xl font-bold mt-2">ADMISSION <span class="text-yellow-400">INTELLIGENCE</span></h1>
 <p id="counter" class="text-yellow-400 text-xs mt-1">1,284 students checked</p>
 <p class="text-[11px] text-gray-400 px-6 mt-2">
-Independent tool. Final admission decisions are made by University Management.
+Independent advisory tool. Final admission decisions are made by University Management.
 </p>
 </div>
 
@@ -47,28 +47,52 @@ Independent tool. Final admission decisions are made by University Management.
 
 <select id="course" class="input mt-3">
 
-<!-- HEALTH -->
+<optgroup label="HEALTH SCIENCES">
 <option value="225">Nursing Science</option>
 <option value="215">Medical Laboratory Science</option>
 <option value="200">Public Health</option>
+</optgroup>
 
-<!-- SCIENCE -->
+<optgroup label="SCIENCE">
 <option value="200">Computer Science</option>
 <option value="195">Biochemistry</option>
 <option value="190">Microbiology</option>
 <option value="185">Industrial Chemistry</option>
 <option value="180">Mathematics</option>
 <option value="175">Statistics</option>
+<option value="170">Physics</option>
+<option value="170">Geophysics</option>
+</optgroup>
 
-<!-- ENGINEERING -->
+<optgroup label="ENGINEERING">
 <option value="200">Mechanical Engineering</option>
-<option value="195">Electrical Engineering</option>
+<option value="195">Electrical/Electronics Engineering</option>
 <option value="190">Civil Engineering</option>
+<option value="185">Chemical Engineering</option>
+</optgroup>
 
-<!-- MANAGEMENT -->
+<optgroup label="MANAGEMENT">
 <option value="200">Accounting</option>
 <option value="195">Business Administration</option>
 <option value="190">Economics</option>
+<option value="185">Entrepreneurship</option>
+</optgroup>
+
+<optgroup label="ENVIRONMENTAL">
+<option value="180">Architecture</option>
+<option value="175">Building Technology</option>
+<option value="175">Estate Management</option>
+<option value="170">Urban Planning</option>
+<option value="170">Quantity Surveying</option>
+</optgroup>
+
+<optgroup label="AGRICULTURE">
+<option value="180">Agricultural Economics</option>
+<option value="175">Animal Production</option>
+<option value="175">Crop Science</option>
+<option value="170">Fisheries & Aquaculture</option>
+<option value="170">Forestry</option>
+</optgroup>
 
 </select>
 
@@ -76,11 +100,12 @@ Independent tool. Final admission decisions are made by University Management.
 
 <button onclick="runSim()" class="btn bg-red-700 mt-4">Run Simulation</button>
 
-<div id="resultBox" class="mt-4 p-4 bg-black/40 rounded-xl">
+<div id="resultBox" class="mt-4 p-4 bg-black/40 rounded-xl border-l-4 border-yellow-500">
 <h2 id="status" class="text-lg font-bold"></h2>
-<p id="message" class="text-sm mt-2"></p>
+<p id="message" class="text-sm mt-2 whitespace-pre-line"></p>
 
 <button onclick="downloadPDF()" class="btn bg-yellow-600 mt-3">Download Report</button>
+<button onclick="shareResult()" class="btn bg-green-600 mt-2">Share Result</button>
 </div>
 
 </div>
@@ -116,73 +141,51 @@ if(isNaN(score)||score<0||score>400){
 showResult("Invalid Score","Enter valid score (0–400)","red");
 return;
 }
-simulateLoading();
+simulate();
 }
 
-/* LOADING */
-function simulateLoading(){
+function simulate(){
 let steps=["Accessing Registry...","Analyzing Data...","Finalizing..."];
 let i=0;
-function next(){
+function loop(){
 if(i<steps.length){
 showResult("Processing",steps[i],"yellow");
-i++;setTimeout(next,700);
-}else{processResult();}
+i++;setTimeout(loop,700);
+}else{process();}
 }
-next();
+loop();
 }
 
-/* INTELLIGENCE ENGINE */
-function processResult(){
-
-const score=parseInt(document.getElementById("score").value);
-const name=document.getElementById("name").value||"Candidate";
-
-const select=document.getElementById("course");
-const cutoff=parseInt(select.value);
-const courseName=select.options[select.selectedIndex].text;
+/* LOGIC */
+function process(){
+let score=parseInt(document.getElementById("score").value);
+let name=document.getElementById("name").value||"Candidate";
+let select=document.getElementById("course");
+let cutoff=parseInt(select.value);
+let course=select.options[select.selectedIndex].text;
 
 let diff=score-cutoff;
 let chance=Math.max(5,Math.min(95,50+diff*2));
 
 let level="",color="",msg="";
 
-if(diff>=25){
-level="🔥 STRONG ADVANTAGE";
-color="green";
-msg="Score is far above competitive range.";
-}
-else if(diff>=5){
-level="⚖️ COMPETITIVE";
-color="green";
-msg="Within competitive range.";
-}
-else if(diff>=-10){
-level="⚠️ BORDERLINE";
-color="yellow";
-msg="Highly competitive.";
-}
-else{
-level="❌ VERY LOW CHANCE";
-color="red";
-msg="Below expected range.";
-}
+if(diff>=25){level="STRONG ADVANTAGE";color="green";msg="Excellent score above range.";}
+else if(diff>=5){level="COMPETITIVE";color="green";msg="Within competitive range.";}
+else if(diff>=-10){level="BORDERLINE";color="yellow";msg="Highly competitive.";}
+else{level="LOW CHANCE";color="red";msg="Below expected range.";}
 
 let alt=getAlt(score);
 
-showResult(
-level,
+showResult(level,
 `${name}, ${msg}
+Course: ${course}
 Chance: ${chance}%
-Course: ${courseName}
-Alternative: ${alt}`,
-color
-);
+Alternative: ${alt}`,color);
 
-window.data={name,score,courseName,level,chance,alt};
+window.data={name,score,course,level,chance,alt};
 }
 
-/* ALTERNATIVES */
+/* ALT */
 function getAlt(score){
 if(score>=210)return "Biochemistry, Computer Science";
 if(score>=190)return "Microbiology, Public Health";
@@ -192,8 +195,7 @@ return "Statistics, Basic Sciences";
 
 /* DISPLAY */
 function showResult(title,text,color){
-let box=document.getElementById("resultBox");
-box.style.display="block";
+document.getElementById("resultBox").style.display="block";
 document.getElementById("status").innerText=title;
 document.getElementById("status").className="text-"+color+"-400 font-bold";
 document.getElementById("message").innerText=text;
@@ -205,27 +207,45 @@ const {jsPDF}=window.jspdf;
 let doc=new jsPDF();
 let d=window.data;
 
-let img=new Image();
-img.src="./logo.png";
+let logo=new Image();
+logo.src="./logo.png";
 
-img.onload=function(){
-doc.addImage(img,'PNG',80,5,40,20);
-doc.text("Admission Intelligence Report",20,40);
-doc.text(`Name: ${d.name}`,20,60);
-doc.text(`Score: ${d.score}`,20,70);
-doc.text(`Course: ${d.courseName}`,20,80);
-doc.text(`Level: ${d.level}`,20,90);
-doc.text(`Chance: ${d.chance}%`,20,100);
-doc.text(`Alternative: ${d.alt}`,20,110);
+logo.onload=function(){
+doc.addImage(logo,'PNG',85,5,40,20);
+doc.text("Admission Intelligence Report",20,50);
+doc.text(`Name: ${d.name}`,20,70);
+doc.text(`Score: ${d.score}`,20,80);
+doc.text(`Course: ${d.course}`,20,90);
+doc.text(`Level: ${d.level}`,20,100);
+doc.text(`Chance: ${d.chance}%`,20,110);
+doc.text(`Alternative: ${d.alt}`,20,120);
 
-doc.text("Final decisions are made by University Management.",20,140);
-doc.text("Powered by Zetra Lab",20,160);
+doc.text("Final admission decisions are made by University Management.",20,150);
+doc.text("Powered by Zetra Lab",20,170);
 
 doc.save("report.pdf");
 };
 }
 
+/* SHARE */
+function shareResult(){
+let d=window.data;
+if(!d)return alert("Run first");
+
+let text=`Admission Check
+
+Score: ${d.score}
+Course: ${d.course}
+Level: ${d.level}
+Chance: ${d.chance}%
+
+Check yours:
+https://coderinnovator-ship-it.github.io/oustech-web/`;
+
+window.open("https://wa.me/?text="+encodeURIComponent(text));
+}
+
 </script>
 
 </body>
-  </html>
+                                </html>
