@@ -10,10 +10,10 @@
 
 <style>
 body{background:#0A1C3C;color:white;font-family:sans-serif;}
-.card{background:rgba(255,255,255,0.06);border-radius:20px;padding:18px;}
-.input{width:100%;padding:14px;border-radius:12px;background:#020617;border:1px solid #1e293b;text-align:center;}
+.card{background:rgba(255,255,255,0.06);border-radius:18px;padding:16px;}
+.input{width:100%;padding:12px;border-radius:10px;background:#020617;border:1px solid #1e293b;text-align:center;}
 .input:focus{border-color:#facc15;outline:none;}
-.btn{width:100%;padding:14px;border-radius:12px;font-weight:bold;}
+.btn{width:100%;padding:12px;border-radius:10px;font-weight:bold;}
 #resultBox{display:none;}
 .ticker{overflow:hidden;white-space:nowrap;background:black;border-bottom:2px solid gold;}
 .ticker span{display:inline-block;padding-left:100%;animation:scroll 25s linear infinite;}
@@ -33,7 +33,7 @@ OAUSTECH • FOR SOCIETY AND DEVELOPMENT • EXCELLENCE IN SCIENCE & TECHNOLOGY 
 <!-- HEADER -->
 <div class="mt-6 text-center">
 <img src="./logo.png" class="w-20 mx-auto rounded-full border-4 border-yellow-500 bg-white p-1">
-<h1 class="text-xl font-bold mt-2">ADMISSION <span class="text-yellow-400">INTELLIGENCE</span></h1>
+<h1 class="text-lg font-bold mt-2">ADMISSION <span class="text-yellow-400">INTELLIGENCE</span></h1>
 <p id="counter" class="text-yellow-400 text-xs mt-1">1,284 students checked</p>
 <p class="text-[11px] text-gray-400 px-6 mt-2">
 Independent advisory tool. Final admission decisions are made by University Management.
@@ -47,7 +47,7 @@ Independent advisory tool. Final admission decisions are made by University Mana
 
 <select id="course" class="input mt-3">
 
-<optgroup label="HEALTH SCIENCES">
+<optgroup label="HEALTH">
 <option value="225">Nursing Science</option>
 <option value="215">Medical Laboratory Science</option>
 <option value="200">Public Health</option>
@@ -78,9 +78,9 @@ Independent advisory tool. Final admission decisions are made by University Mana
 <option value="185">Entrepreneurship</option>
 </optgroup>
 
-<optgroup label="ENVIRONMENTAL">
+<optgroup label="ENVIRONMENT">
 <option value="180">Architecture</option>
-<option value="175">Building Technology</option>
+<option value="175">Building Tech</option>
 <option value="175">Estate Management</option>
 <option value="170">Urban Planning</option>
 <option value="170">Quantity Surveying</option>
@@ -90,38 +90,23 @@ Independent advisory tool. Final admission decisions are made by University Mana
 <option value="180">Agricultural Economics</option>
 <option value="175">Animal Production</option>
 <option value="175">Crop Science</option>
-<option value="170">Fisheries & Aquaculture</option>
+<option value="170">Fisheries</option>
 <option value="170">Forestry</option>
 </optgroup>
 
 </select>
 
-<input id="score" type="number" placeholder="Enter UTME Score" class="input mt-3 text-xl">
+<input id="score" type="number" placeholder="UTME Score" class="input mt-3">
 
-<button onclick="runSim()" class="btn bg-red-700 mt-4">Run Simulation</button>
+<button onclick="runSim()" class="btn bg-red-700 mt-4">Run Audit</button>
 
 <div id="resultBox" class="mt-4 p-4 bg-black/40 rounded-xl border-l-4 border-yellow-500">
-<h2 id="status" class="text-lg font-bold"></h2>
+<h2 id="status"></h2>
 <p id="message" class="text-sm mt-2 whitespace-pre-line"></p>
 
-<button onclick="downloadPDF()" class="btn bg-yellow-600 mt-3">Download Report</button>
-<button onclick="shareResult()" class="btn bg-green-600 mt-2">Share Result</button>
+<button onclick="downloadPDF()" class="btn bg-yellow-600 mt-3">Download PDF</button>
+<button onclick="shareResult()" class="btn bg-green-600 mt-2">Share</button>
 </div>
-
-</div>
-
-<!-- CONTACT -->
-<div class="mt-6 grid grid-cols-2 gap-3 w-[92%] max-w-xs">
-
-<a href="https://wa.me/2348056604409" class="bg-black p-4 rounded-xl text-center border border-gray-700">
-<p class="text-green-400 font-bold text-sm">Technical Support</p>
-<p class="text-[11px] text-gray-400">Feedback & Help</p>
-</a>
-
-<a href="mailto:info@oaustech.edu.ng" class="bg-black p-4 rounded-xl text-center border border-gray-700">
-<p class="text-blue-400 font-bold text-sm">OAUSTECH Contact</p>
-<p class="text-[11px] text-gray-400">Official Email</p>
-</a>
 
 </div>
 
@@ -144,13 +129,14 @@ return;
 simulate();
 }
 
+/* PROCESS EFFECT */
 function simulate(){
-let steps=["Accessing Registry...","Analyzing Data...","Finalizing..."];
+let steps=["Accessing Registry...","Analyzing Data...","Finalizing Report..."];
 let i=0;
 function loop(){
 if(i<steps.length){
 showResult("Processing",steps[i],"yellow");
-i++;setTimeout(loop,700);
+i++;setTimeout(loop,600);
 }else{process();}
 }
 loop();
@@ -158,6 +144,7 @@ loop();
 
 /* LOGIC */
 function process(){
+
 let score=parseInt(document.getElementById("score").value);
 let name=document.getElementById("name").value||"Candidate";
 let select=document.getElementById("course");
@@ -169,7 +156,7 @@ let chance=Math.max(5,Math.min(95,50+diff*2));
 
 let level="",color="",msg="";
 
-if(diff>=25){level="STRONG ADVANTAGE";color="green";msg="Excellent score above range.";}
+if(diff>=25){level="STRONG ADVANTAGE";color="green";msg="Excellent performance.";}
 else if(diff>=5){level="COMPETITIVE";color="green";msg="Within competitive range.";}
 else if(diff>=-10){level="BORDERLINE";color="yellow";msg="Highly competitive.";}
 else{level="LOW CHANCE";color="red";msg="Below expected range.";}
@@ -177,10 +164,14 @@ else{level="LOW CHANCE";color="red";msg="Below expected range.";}
 let alt=getAlt(score);
 
 showResult(level,
-`${name}, ${msg}
+`${name}
 Course: ${course}
 Chance: ${chance}%
-Alternative: ${alt}`,color);
+
+${msg}
+
+Suggested Alternatives:
+${alt}`,color);
 
 window.data={name,score,course,level,chance,alt};
 }
@@ -201,29 +192,82 @@ document.getElementById("status").className="text-"+color+"-400 font-bold";
 document.getElementById("message").innerText=text;
 }
 
-/* PDF */
+/* PDF (UPGRADED) */
 function downloadPDF(){
 const {jsPDF}=window.jspdf;
 let doc=new jsPDF();
 let d=window.data;
 
-let logo=new Image();
-logo.src="./logo.png";
+// HEADER
+doc.setFillColor(10,28,60);
+doc.rect(0,0,210,30,'F');
 
-logo.onload=function(){
-doc.addImage(logo,'PNG',85,5,40,20);
-doc.text("Admission Intelligence Report",20,50);
-doc.text(`Name: ${d.name}`,20,70);
-doc.text(`Score: ${d.score}`,20,80);
-doc.text(`Course: ${d.course}`,20,90);
-doc.text(`Level: ${d.level}`,20,100);
-doc.text(`Chance: ${d.chance}%`,20,110);
-doc.text(`Alternative: ${d.alt}`,20,120);
+doc.setTextColor(255);
+doc.setFontSize(12);
+doc.text("OAUSTECH ADMISSION INTELLIGENCE REPORT",105,18,null,null,"center");
 
-doc.text("Final admission decisions are made by University Management.",20,150);
-doc.text("Powered by Zetra Lab",20,170);
+// LOGO
+let img=new Image();
+img.src="./logo.png";
 
-doc.save("report.pdf");
+img.onload=function(){
+
+doc.addImage(img,'PNG',90,5,25,15);
+
+// AUDIT ID
+let id="OAUS-"+Math.floor(Math.random()*99999);
+doc.setTextColor(0);
+doc.setFontSize(10);
+doc.text("Audit ID: "+id,20,40);
+
+// SECTION LINE
+doc.line(20,45,190,45);
+
+// DETAILS
+doc.text("Candidate Information",20,55);
+doc.line(20,57,100,57);
+
+doc.text(`Name: ${d.name}`,20,65);
+doc.text(`Score: ${d.score}`,20,75);
+doc.text(`Course: ${d.course}`,20,85);
+
+// RESULT
+doc.text("Evaluation Result",20,105);
+doc.line(20,107,100,107);
+
+doc.text(`Status: ${d.level}`,20,115);
+doc.text(`Chance: ${d.chance}%`,20,125);
+
+// ADVICE
+doc.text("Advisory",20,145);
+doc.line(20,147,60,147);
+
+doc.text(`Alternative: ${d.alt}`,20,155);
+
+// FOOTER
+doc.setFontSize(8);
+doc.setTextColor(120);
+
+doc.text(
+"Final admission decisions are made exclusively by University Management.",
+105,
+260,
+null,
+null,
+"center"
+);
+
+doc.text(
+"System Infrastructure: Zetra Lab",
+105,
+270,
+null,
+null,
+"center"
+);
+
+doc.save("OAUSTECH_Report.pdf");
+
 };
 }
 
@@ -232,7 +276,7 @@ function shareResult(){
 let d=window.data;
 if(!d)return alert("Run first");
 
-let text=`Admission Check
+let text=`OAUSTECH Admission Check
 
 Score: ${d.score}
 Course: ${d.course}
@@ -248,4 +292,4 @@ window.open("https://wa.me/?text="+encodeURIComponent(text));
 </script>
 
 </body>
-                                </html>
+</html>
