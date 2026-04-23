@@ -11,6 +11,15 @@ body{background:#0A1C3C;color:white;font-family:sans-serif;}
 .card{background:#13254d;border-radius:16px;padding:16px;}
 .input{width:100%;padding:12px;border-radius:10px;background:#020617;border:1px solid #1e293b;text-align:center;}
 .btn{width:100%;padding:12px;border-radius:10px;font-weight:bold;}
+.loader{
+border:3px solid #444;
+border-top:3px solid gold;
+border-radius:50%;
+width:30px;height:30px;
+animation:spin 1s linear infinite;
+margin:auto;
+}
+@keyframes spin{100%{transform:rotate(360deg);}}
 </style>
 </head>
 
@@ -41,7 +50,7 @@ Final admission decisions are made by University Management.
 <option value="200">Public Health</option>
 </optgroup>
 
-<optgroup label="Science">
+<optgroup label="Pure & Applied Sciences">
 <option value="200">Computer Science</option>
 <option value="195">Biochemistry</option>
 <option value="190">Microbiology</option>
@@ -52,14 +61,17 @@ Final admission decisions are made by University Management.
 <option value="170">Geophysics</option>
 </optgroup>
 
-<optgroup label="Engineering">
+<optgroup label="Engineering & Technology">
 <option value="200">Mechanical Engineering</option>
-<option value="195">Electrical Engineering</option>
+<option value="195">Electrical/Electronics Engineering</option>
 <option value="190">Civil Engineering</option>
 <option value="185">Chemical Engineering</option>
+<option value="185">Petroleum Engineering</option>
+<option value="180">Computer Engineering</option>
+<option value="180">Agricultural Engineering</option>
 </optgroup>
 
-<optgroup label="Agriculture">
+<optgroup label="Agriculture & Fisheries">
 <option value="180">Agricultural Economics</option>
 <option value="175">Animal Production</option>
 <option value="175">Crop Science</option>
@@ -73,11 +85,23 @@ Final admission decisions are made by University Management.
 
 <button onclick="run()" class="btn bg-red-700">Run Simulation</button>
 
+<!-- LOADING -->
+<div id="loading" class="hidden mt-4 text-center">
+<div class="loader"></div>
+<p class="text-xs mt-2">Processing admission data...</p>
+</div>
+
+<!-- RESULT -->
 <div id="result" class="hidden mt-4 p-4 bg-black/40 rounded-lg border-l-4 border-yellow-400">
 <h2 id="status" class="font-bold text-lg"></h2>
 <p id="msg" class="text-sm mt-2 whitespace-pre-line"></p>
 
 <button onclick="generatePDF()" class="btn bg-yellow-500 mt-3">Download Report</button>
+
+<a id="whatsappBtn" target="_blank" class="btn bg-green-600 mt-2 text-center block">
+Export to WhatsApp
+</a>
+
 </div>
 
 </div>
@@ -102,6 +126,7 @@ Final admission decisions are made by University Management.
 let data={};
 
 function run(){
+
 let score=parseInt(document.getElementById("score").value);
 let select=document.getElementById("course");
 let cutoff=parseInt(select.value);
@@ -109,51 +134,81 @@ let course=select.options[select.selectedIndex].text;
 
 if(isNaN(score)){alert("Enter valid score");return;}
 
+document.getElementById("loading").classList.remove("hidden");
+document.getElementById("result").classList.add("hidden");
+
+setTimeout(()=>{
+
+document.getElementById("loading").classList.add("hidden");
+
 let chance=Math.max(5,Math.min(95,50+(score-cutoff)*3-25));
 
-let status=
+let status =
 chance>70?"HIGH CHANCE":
 chance>50?"MODERATE":
 chance>30?"LOW":"VERY LOW";
 
-let alternatives = score<180 ?
+let alt = score<180 ?
 "Statistics, Fisheries, Forestry" :
 "Microbiology, Industrial Chemistry, Public Health";
 
+let message =
+`Admission Chance: ${chance}%\n\nAlternatives:\n${alt}`;
+
 document.getElementById("result").classList.remove("hidden");
 document.getElementById("status").innerText=status;
-document.getElementById("msg").innerText=
-`Admission Chance: ${chance}%\n\nAlternatives:\n${alternatives}`;
+document.getElementById("msg").innerText=message;
 
-data={name:document.getElementById("name").value,score,course,chance,status,alternatives};
+// WhatsApp export
+let text = `OAUSTECH Admission Result\nName: ${document.getElementById("name").value}\nScore: ${score}\nCourse: ${course}\nChance: ${chance}%\nStatus: ${status}\nAlternatives: ${alt}`;
+document.getElementById("whatsappBtn").href =
+"https://wa.me/?text=" + encodeURIComponent(text);
+
+data={name:document.getElementById("name").value,score,course,chance,status,alt};
+
+},1500); // delay added
+
 }
 
+/* PDF */
 function generatePDF(){
+
 const {jsPDF}=window.jspdf;
 let doc=new jsPDF();
 
-// HEADER BAR
+// HEADER
 doc.setFillColor(10,28,60);
-doc.rect(0,0,210,35,'F');
+doc.rect(0,0,210,40,'F');
 
-// TITLE
+// LOGO
+let img=new Image();
+img.src="./logo.png";
+
+img.onload=function(){
+
+doc.addImage(img,'PNG',92,5,25,25);
+
+// TITLE BELOW LOGO
 doc.setTextColor(255);
 doc.setFontSize(12);
-doc.text("OAUSTECH ADMISSION REPORT",105,20,null,null,"center");
+doc.text("OAUSTECH ADMISSION REPORT",105,35,null,null,"center");
 
-// BODY
+// BODY BOX
+doc.setDrawColor(200);
+doc.rect(15,50,180,120);
+
 doc.setTextColor(0);
 doc.setFontSize(11);
 
-doc.text(`Name: ${data.name}`,20,60);
-doc.text(`Score: ${data.score}`,20,70);
-doc.text(`Course: ${data.course}`,20,80);
+doc.text(`Name: ${data.name}`,20,65);
+doc.text(`Score: ${data.score}`,20,75);
+doc.text(`Course: ${data.course}`,20,85);
 
-doc.text(`Chance: ${data.chance}%`,20,100);
-doc.text(`Status: ${data.status}`,20,110);
+doc.text(`Chance: ${data.chance}%`,20,105);
+doc.text(`Status: ${data.status}`,20,115);
 
 doc.text("Alternatives:",20,130);
-doc.text(data.alternatives,20,140,{maxWidth:170});
+doc.text(data.alt,20,140,{maxWidth:160});
 
 // FOOTER
 doc.setFontSize(8);
@@ -163,6 +218,9 @@ doc.text("Final admission decisions are made by University Management.",105,270,
 doc.text("Powered by Zetra Lab",105,280,null,null,"center");
 
 doc.save("OAUSTECH_Report.pdf");
+
+};
+
 }
 
 </script>
