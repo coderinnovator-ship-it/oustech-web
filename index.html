@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>OAUSTECH Admission Intelligence</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 body{background:#0A1C3C;color:white;font-family:sans-serif;}
-.card{background:#13254d;border-radius:18px;padding:18px;}
+.card{background:#13254d;border-radius:16px;padding:16px;}
 .input{width:100%;padding:12px;border-radius:10px;background:#020617;border:1px solid #1e293b;text-align:center;}
-.input:focus{border-color:#facc15;outline:none;}
 .btn{width:100%;padding:12px;border-radius:10px;font-weight:bold;}
 </style>
 </head>
@@ -21,19 +17,19 @@ body{background:#0A1C3C;color:white;font-family:sans-serif;}
 <body class="flex flex-col items-center px-4 pb-16">
 
 <!-- HEADER -->
-<div class="text-center mt-8 max-w-sm">
-<img src="./logo.png" class="w-20 mx-auto mb-2">
-<h1 class="text-xl font-bold">
-ADMISSION <span class="text-yellow-400">INTELLIGENCE</span>
+<div class="text-center mt-6 max-w-sm">
+<img src="./logo.png" class="w-16 mx-auto mb-2">
+<h1 class="text-lg font-bold">
+ADMISSION <span class="text-yellow-400">SIMULATION</span>
 </h1>
-<p class="text-xs text-gray-400 mt-2">
-Independent advisory tool. Not affiliated with OAUSTECH.<br>
+<p class="text-xs text-gray-400">
+Independent student-built tool. Not affiliated with OAUSTECH.<br>
 Final admission decisions are made by University Management.
 </p>
 </div>
 
 <!-- CARD -->
-<div class="card w-full max-w-sm mt-6">
+<div class="card w-full max-w-sm mt-5">
 
 <input id="name" placeholder="Enter Name" class="input mb-3">
 
@@ -73,15 +69,15 @@ Final admission decisions are made by University Management.
 
 </select>
 
-<input id="score" type="number" placeholder="Enter Score" class="input text-2xl mb-4">
+<input id="score" type="number" placeholder="Enter Score" class="input text-xl mb-4">
 
 <button onclick="run()" class="btn bg-red-700">Run Simulation</button>
 
-<div id="result" class="hidden mt-4 p-4 bg-black/40 rounded-lg border-l-4 border-yellow-500">
+<div id="result" class="hidden mt-4 p-4 bg-black/40 rounded-lg border-l-4 border-yellow-400">
 <h2 id="status" class="font-bold text-lg"></h2>
 <p id="msg" class="text-sm mt-2 whitespace-pre-line"></p>
 
-<button onclick="pdf()" class="btn bg-yellow-600 mt-3">Download Report</button>
+<button onclick="generatePDF()" class="btn bg-yellow-500 mt-3">Download Report</button>
 </div>
 
 </div>
@@ -89,75 +85,23 @@ Final admission decisions are made by University Management.
 <!-- CONTACT -->
 <div class="grid grid-cols-2 gap-3 mt-6 max-w-sm w-full">
 
-<div class="bg-black p-3 rounded-lg text-center">
-<p class="text-green-400 text-sm font-bold">Technical Support</p>
-<p class="text-xs">08056604409</p>
-</div>
+<a href="https://wa.me/2348056604409" target="_blank" class="bg-black p-3 rounded-lg text-center">
+<p class="text-green-400 font-bold text-sm">Technical Support</p>
+<p class="text-xs">Chat on WhatsApp</p>
+</a>
 
-<div class="bg-black p-3 rounded-lg text-center">
-<p class="text-blue-400 text-sm font-bold">OAUSTECH Email</p>
-<p class="text-xs">info@oaustech.edu.ng</p>
-</div>
+<a href="mailto:info@oaustech.edu.ng" class="bg-black p-3 rounded-lg text-center">
+<p class="text-blue-400 font-bold text-sm">OAUSTECH Email</p>
+<p class="text-xs">Send Email</p>
+</a>
 
 </div>
 
 <script>
 
-/* COURSE DATA */
-const courses = [
-{ name:"Nursing Science", cut:225, demand:95 },
-{ name:"Medical Laboratory Science", cut:215, demand:90 },
-{ name:"Public Health", cut:200, demand:75 },
-
-{ name:"Computer Science", cut:200, demand:85 },
-{ name:"Biochemistry", cut:195, demand:80 },
-{ name:"Microbiology", cut:190, demand:78 },
-{ name:"Industrial Chemistry", cut:185, demand:70 },
-{ name:"Mathematics", cut:180, demand:60 },
-{ name:"Statistics", cut:175, demand:55 },
-
-{ name:"Mechanical Engineering", cut:200, demand:85 },
-{ name:"Electrical Engineering", cut:195, demand:82 },
-{ name:"Civil Engineering", cut:190, demand:80 },
-
-{ name:"Agricultural Economics", cut:180, demand:60 },
-{ name:"Animal Production", cut:175, demand:55 },
-{ name:"Crop Science", cut:175, demand:55 },
-{ name:"Fisheries", cut:170, demand:40 },
-{ name:"Forestry", cut:170, demand:45 }
-];
-
-/* MATCHER */
-function getBestMatches(score){
-let results = courses.map(c=>{
-let diff = score - c.cut;
-let scoreFit = Math.max(0, 100 + diff*2);
-let demandPenalty = c.demand * 0.5;
-let finalScore = scoreFit - demandPenalty;
-
-return {
-name:c.name,
-fit:Math.min(100,Math.max(0,Math.round(finalScore)))
-};
-});
-results.sort((a,b)=>b.fit-a.fit);
-return results.slice(0,4);
-}
-
-/* CHANCE */
-function getChance(score, cutoff, demand){
-let diff = score - cutoff;
-let base = 50 + diff*3;
-let penalty = demand * 0.4;
-let chance = base - penalty;
-return Math.min(95, Math.max(5, Math.round(chance)));
-}
-
 let data={};
 
-/* RUN */
 function run(){
-
 let score=parseInt(document.getElementById("score").value);
 let select=document.getElementById("course");
 let cutoff=parseInt(select.value);
@@ -165,85 +109,63 @@ let course=select.options[select.selectedIndex].text;
 
 if(isNaN(score)){alert("Enter valid score");return;}
 
-let demand = 80;
-let chance = getChance(score, cutoff, demand);
-let matches = getBestMatches(score);
+let chance=Math.max(5,Math.min(95,50+(score-cutoff)*3-25));
 
-let altText = matches.map(m=>`${m.name} (${m.fit}%)`).join(", ");
+let status=
+chance>70?"HIGH CHANCE":
+chance>50?"MODERATE":
+chance>30?"LOW":"VERY LOW";
 
-let status = chance > 70 ? "HIGH CHANCE" :
-             chance > 50 ? "MODERATE" :
-             chance > 30 ? "LOW" : "VERY LOW";
-
-let msg = `
-Admission Chance: ${chance}%
-
-Best Alternatives:
-${altText}
-`;
+let alternatives = score<180 ?
+"Statistics, Fisheries, Forestry" :
+"Microbiology, Industrial Chemistry, Public Health";
 
 document.getElementById("result").classList.remove("hidden");
 document.getElementById("status").innerText=status;
-document.getElementById("msg").innerText=msg;
+document.getElementById("msg").innerText=
+`Admission Chance: ${chance}%\n\nAlternatives:\n${alternatives}`;
 
-data={
-name:document.getElementById("name").value,
-score,
-course,
-chance,
-altText,
-status
-};
+data={name:document.getElementById("name").value,score,course,chance,status,alternatives};
 }
 
-/* PDF */
-function pdf(){
-
+function generatePDF(){
 const {jsPDF}=window.jspdf;
 let doc=new jsPDF();
 
-// HEADER
+// HEADER BAR
 doc.setFillColor(10,28,60);
-doc.rect(0,0,210,40,'F');
+doc.rect(0,0,210,35,'F');
 
-let img=new Image();
-img.src="./logo.png";
-
-img.onload=function(){
-
-doc.addImage(img,'PNG',90,5,25,25);
-
+// TITLE
 doc.setTextColor(255);
 doc.setFontSize(12);
-doc.text("OAUSTECH ADMISSION REPORT",105,30,null,null,"center");
+doc.text("OAUSTECH ADMISSION REPORT",105,20,null,null,"center");
 
+// BODY
 doc.setTextColor(0);
 doc.setFontSize(11);
 
-doc.text("Name: "+data.name,20,60);
-doc.text("Score: "+data.score,20,70);
-doc.text("Course: "+data.course,20,80);
+doc.text(`Name: ${data.name}`,20,60);
+doc.text(`Score: ${data.score}`,20,70);
+doc.text(`Course: ${data.course}`,20,80);
 
-doc.text("Chance: "+data.chance+"%",20,100);
-doc.text("Status: "+data.status,20,110);
+doc.text(`Chance: ${data.chance}%`,20,100);
+doc.text(`Status: ${data.status}`,20,110);
 
 doc.text("Alternatives:",20,130);
-doc.text(data.altText,20,140,{maxWidth:170});
+doc.text(data.alternatives,20,140,{maxWidth:170});
 
 // FOOTER
 doc.setFontSize(8);
 doc.setTextColor(120);
 
-doc.text("Final admission decisions are made by University Management.",105,260,null,null,"center");
-doc.text("System Powered by Zetra Lab",105,270,null,null,"center");
+doc.text("Final admission decisions are made by University Management.",105,270,null,null,"center");
+doc.text("Powered by Zetra Lab",105,280,null,null,"center");
 
 doc.save("OAUSTECH_Report.pdf");
-
-};
-
 }
 
 </script>
 
 </body>
-  </html>
+</html>
