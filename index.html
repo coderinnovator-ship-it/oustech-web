@@ -51,9 +51,9 @@ OAUSTECH • FOR SOCIETY AND DEVELOPMENT • EXCELLENCE IN SCIENCE & TECHNOLOGY 
 ADMISSION <span class="text-yellow-400">SIMULATION</span>
 </h1>
 
-<!-- SOCIAL PROOF -->
-<p class="text-xs text-yellow-400 mt-1">
-1,284+ students have checked their chances
+<!-- LIVE COUNTER -->
+<p id="counter" class="text-xs text-yellow-400 mt-1">
+1,284 students checked
 </p>
 
 <p class="text-xs text-gray-400 text-center px-6 mt-2">
@@ -64,11 +64,9 @@ Final admission decisions are made solely by University Management.
 <!-- MAIN -->
 <div class="card w-full max-w-sm mt-6">
 
-<!-- NAME -->
 <input id="name" type="text" placeholder="Enter Your Name"
 class="w-full mt-2 p-3 text-center text-sm bg-black rounded-lg">
 
-<!-- COURSE -->
 <select id="course" class="w-full p-3 bg-black rounded mt-3">
 
 <optgroup label="SCIENCE">
@@ -102,16 +100,14 @@ class="w-full mt-2 p-3 text-center text-sm bg-black rounded-lg">
 
 </select>
 
-<!-- SCORE -->
 <input id="score" type="number" inputmode="numeric"
 placeholder="Enter Score"
-class="w-full mt-4 p-3 text-center text-2xl bg-black rounded-lg outline-none focus:ring-2 focus:ring-yellow-500 transition">
+class="w-full mt-4 p-3 text-center text-2xl bg-black rounded-lg">
 
 <button onclick="runSimulation()" class="w-full mt-4 bg-red-700 p-3 rounded font-bold">
 Run Simulation
 </button>
 
-<!-- RESULT -->
 <div id="resultBox" class="mt-4 p-4 bg-black/40 rounded">
 <h2 id="status" class="font-bold text-lg"></h2>
 <p id="message" class="text-sm mt-2 whitespace-pre-line"></p>
@@ -129,44 +125,62 @@ Share Result
 
 <script>
 
+/* LIVE COUNTER */
+let count = 1284;
+setInterval(()=>{
+count += Math.floor(Math.random()*3)+1;
+document.getElementById("counter").innerText =
+count.toLocaleString()+" students checked";
+},3000);
+
+/* RUN */
 function runSimulation(){
 const score=parseInt(document.getElementById("score").value);
 
 if(isNaN(score)||score<0||score>400){
-showResult("Invalid Score","Enter a valid UTME score (0–400)","red");
+showResult("Invalid Score","Enter valid score (0–400)","red");
 return;
 }
 
 simulateLoading();
 }
 
-/* LOADING */
+/* ROLLING EFFECT */
 function simulateLoading(){
 const steps=[
 "Accessing Registry...",
 "Evaluating Academic Metrics...",
-"Comparing Historical Data...",
+"Analyzing Score Pattern...",
 "Finalizing Simulation..."
 ];
 
 let i=0;
 
 function nextStep(){
-  if(i < steps.length){
-    requestAnimationFrame(()=>{
-      showResult("Processing",steps[i],"yellow");
-      i++;
-      setTimeout(nextStep,800);
-    });
-  } else {
-    processResult();
-  }
+if(i < steps.length){
+
+let fake = Math.floor(Math.random()*400);
+
+let roll = setInterval(()=>{
+fake = (fake + Math.floor(Math.random()*20)) % 400;
+showResult("Processing",steps[i]+" ("+fake+")","yellow");
+},80);
+
+setTimeout(()=>{
+clearInterval(roll);
+i++;
+nextStep();
+},900);
+
+}else{
+processResult();
+}
 }
 
 nextStep();
 }
 
-/* RESULT ENGINE */
+/* RESULT */
 function processResult(){
 const score=parseInt(document.getElementById("score").value);
 const name=document.getElementById("name").value || "Candidate";
@@ -184,21 +198,21 @@ status="COMPETITIVE";
 color="green";
 
 if(score > cutoff + 20){
-elite="You are in the top 5% range for this program.";
+elite="You are in the top 5% range.";
 }
 
-message=name + ", your profile shows strong alignment with " + courseName;
+message=name+", strong alignment with "+courseName;
 }else{
 status="LOW PROBABILITY";
 color="yellow";
-message=name + ", your score is below the competitive range for " + courseName;
+message=name+", below competitive range for "+courseName;
 }
 
 let alt=getAlternatives(score);
 
 showResult(
 status,
-message + "\nChance: " + chance + "%\n" + elite,
+message+"\nChance: "+chance+"%\n"+elite,
 color,
 alt
 );
@@ -206,7 +220,7 @@ alt
 window.data={name,score,courseName,status,chance,message,alt};
 }
 
-/* ALTERNATIVES */
+/* ALT */
 function getAlternatives(score){
 if(score>=200) return "Suggested: Biochemistry, Microbiology";
 if(score>=180) return "Suggested: Industrial Chemistry, Physics";
@@ -220,9 +234,7 @@ const box=document.getElementById("resultBox");
 const status=document.getElementById("status");
 const message=document.getElementById("message");
 
-if(box.style.display !== "block"){
-  box.style.display="block";
-}
+if(box.style.display!=="block"){ box.style.display="block"; }
 
 status.textContent=title;
 status.className="font-bold text-lg text-"+color+"-400";
@@ -230,37 +242,46 @@ status.className="font-bold text-lg text-"+color+"-400";
 message.textContent=text+"\n"+alt;
 }
 
-/* PDF */
+/* PDF WITH LOGO */
 function downloadPDF(){
 const {jsPDF}=window.jspdf;
 const doc=new jsPDF();
 const d=window.data;
 
+const logo=new Image();
+logo.src="./logo.png";
+
+logo.onload=function(){
+
+doc.addImage(logo,'PNG',85,5,40,20);
+
 doc.setFontSize(14);
-doc.text("ADMISSION SIMULATION REPORT",105,20,null,null,"center");
+doc.text("ADMISSION SIMULATION REPORT",105,30,null,null,"center");
 
 doc.setFontSize(10);
-doc.text("Name: "+d.name,20,40);
-doc.text("Score: "+d.score,20,50);
-doc.text("Course: "+d.courseName,20,60);
-doc.text("Status: "+d.status,20,70);
-doc.text("Chance: "+d.chance+"%",20,80);
+doc.text("Name: "+d.name,20,50);
+doc.text("Score: "+d.score,20,60);
+doc.text("Course: "+d.courseName,20,70);
+doc.text("Status: "+d.status,20,80);
+doc.text("Chance: "+d.chance+"%",20,90);
 
-doc.text("Analysis:",20,100);
-doc.text(d.message,20,110,{maxWidth:170});
+doc.text("Analysis:",20,110);
+doc.text(d.message,20,120,{maxWidth:170});
 
-doc.text("Recommendation:",20,130);
-doc.text(d.alt,20,140);
+doc.text("Recommendation:",20,140);
+doc.text(d.alt,20,150);
 
 doc.setFontSize(8);
 doc.text(
-"Disclaimer: This is a simulation tool. Final admission decisions are made by University Management.",
+"Disclaimer: Simulation only. Final decisions by University Management.",
 20,180,{maxWidth:170}
 );
 
 doc.text("Powered by Zetra Lab",105,280,null,null,"center");
 
 doc.save("Admission_Report.pdf");
+
+};
 }
 
 /* SHARE */
