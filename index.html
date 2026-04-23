@@ -20,11 +20,21 @@
         .admin-img-frame { width: 100%; height: 115px; border-radius: 15px; background: #000; border: 1px solid #333; overflow: hidden; }
         .admin-img-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        #result-box { max-height: 0; opacity: 0; overflow: hidden; transition: 0.5s; }
+        #loading-overlay { display: none; background: rgba(10, 28, 60, 0.95); position: fixed; inset: 0; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
+        #result-box { max-height: 0; opacity: 0; overflow: hidden; transition: 0.8s ease; }
         #result-box.active { max-height: 1500px; opacity: 1; margin-top: 20px; }
+
+        .scan-line { width: 100%; height: 2px; background: var(--oaustech-gold); position: absolute; top: 0; animation: scan 2s linear infinite; box-shadow: 0 0 15px var(--oaustech-gold); }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
     </style>
 </head>
 <body class="flex flex-col items-center pb-20">
+
+    <div id="loading-overlay">
+        <div class="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-xs font-black uppercase tracking-[0.3em] text-yellow-500">Scanning Registry...</p>
+        <p id="loading-step" class="text-[8px] text-slate-400 mt-2 uppercase italic">Validating UTME Credentials</p>
+    </div>
 
     <div class="ticker-container w-full">
         <div class="ticker-content text-[10px] font-bold text-yellow-400 uppercase tracking-widest">
@@ -33,10 +43,11 @@
     </div>
 
     <header class="mt-10 mb-6 text-center">
-        <div class="mx-auto w-[90px] h-[90px] bg-white rounded-full border-4 border-yellow-500 flex items-center justify-center overflow-hidden shadow-2xl">
-            <img id="mainLogo" src="logo.png?v=1" class="w-full h-full object-contain p-1">
+        <div class="mx-auto w-[90px] h-[90px] bg-white rounded-full border-4 border-yellow-500 flex items-center justify-center overflow-hidden shadow-2xl relative">
+            <img id="mainLogo" src="logo.png?v=8392" class="w-full h-full object-contain p-1">
+            <div class="scan-line"></div>
         </div>
-        <h1 class="text-2xl font-black mt-4 uppercase">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
+        <h1 class="text-2xl font-black mt-4 uppercase tracking-tight">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
     </header>
 
     <main class="w-full max-w-sm px-4">
@@ -46,15 +57,18 @@
             <div class="grid grid-cols-3 gap-3">
                 <div class="text-center">
                     <div class="admin-img-frame"><img id="img-gov" src="gov.jpg?v=1"></div>
-                    <p class="text-[7px] font-bold mt-2 uppercase">The Visitor</p>
+                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">HE Lucky Aiyedatiwa</p>
+                    <p class="text-[5px] text-slate-400 uppercase">The Visitor</p>
                 </div>
                 <div class="text-center">
                     <div class="admin-img-frame"><img id="img-chan" src="chan.jpg?v=1" onerror="this.src='https://via.placeholder.com/150?text=Chancellor'"></div>
-                    <p class="text-[7px] font-bold mt-2 uppercase">Chancellor</p>
+                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">The Chancellor</p>
+                    <p class="text-[5px] text-slate-400 uppercase">University Leadership</p>
                 </div>
                 <div class="text-center">
                     <div class="admin-img-frame"><img id="img-vc" src="vc.jpg?v=1"></div>
-                    <p class="text-[7px] font-bold mt-2 uppercase">Vice-Chancellor</p>
+                    <p class="text-[6px] font-black mt-2 uppercase text-yellow-500">Prof. J.A. Oguntola</p>
+                    <p class="text-[5px] text-slate-400 uppercase">Vice-Chancellor</p>
                 </div>
             </div>
         </section>
@@ -68,35 +82,27 @@
                     <option value="200" data-alt="Microbiology">Public Health</option>
                 </optgroup>
                 <optgroup label="APPLIED SCIENCES">
+                    <option value="200" data-alt="Statistics">Computer Science</option>
                     <option value="195" data-alt="Biological Sciences">Biochemistry</option>
                     <option value="190" data-alt="Biological Sciences">Microbiology</option>
                     <option value="180" data-alt="Botany">Zoology</option>
-                    <option value="175" data-alt="Zoology">Botany</option>
-                    <option value="200" data-alt="Statistics">Computer Science</option>
                     <option value="180" data-alt="Physics">Industrial Chemistry</option>
-                    <option value="180" data-alt="Maths">Applied Physics</option>
-                    <option value="175" data-alt="Maths">Statistics</option>
                 </optgroup>
                 <optgroup label="ENGINEERING">
                     <option value="195" data-alt="Civil">Mechanical Engineering</option>
                     <option value="195" data-alt="Civil">Electrical Engineering</option>
                     <option value="185" data-alt="Geology">Civil Engineering</option>
                 </optgroup>
-                <optgroup label="AGRICULTURE">
-                    <option value="170" data-alt="Forestry">Agricultural Science</option>
-                    <option value="175" data-alt="Biology">Fisheries & Aquaculture</option>
-                    <option value="175" data-alt="Biology">Food Science & Tech</option>
-                </optgroup>
             </select>
 
             <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Verified UTME Score</label>
             <input type="number" id="score" placeholder="000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-5xl font-black text-center mb-6 outline-none">
 
-            <button onclick="runAudit()" class="w-full bg-red-800 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest shadow-lg active:scale-95 transition-all">Execute Analysis</button>
+            <button onclick="triggerAnalysis()" class="w-full bg-red-800 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest shadow-lg">Run Registry Audit</button>
 
             <div id="result-box" class="p-6 bg-black/40 rounded-2xl border-l-4 border-yellow-500">
                 <div id="status" class="text-lg font-black uppercase mb-1"></div>
-                <div id="density" class="text-[8px] font-bold text-yellow-500 mb-3">COMPETITION DENSITY: 58%</div>
+                <div class="text-[8px] font-bold text-yellow-500 mb-3">SYSTEM STATUS: ENCRYPTED VERIFICATION</div>
                 <p id="advice" class="text-[10px] text-slate-300 italic mb-6 leading-relaxed"></p>
                 <button onclick="generateFormalPDF()" class="w-full bg-yellow-600 py-3 rounded-xl font-black text-[10px] uppercase shadow-lg">Download Formal Audit</button>
             </div>
@@ -104,24 +110,38 @@
     </main>
 
     <script>
-        function runAudit() {
+        function triggerAnalysis() {
             const score = document.getElementById('score').value;
             if(!score) return;
+            
+            const overlay = document.getElementById('loading-overlay');
+            const stepText = document.getElementById('loading-step');
+            overlay.style.display = 'flex';
+
+            // Fake 5-second delay for "Technical Audit" feel
+            setTimeout(() => { stepText.innerText = "Accessing Management Server..."; }, 1500);
+            setTimeout(() => { stepText.innerText = "Calculating Competition Density..."; }, 3000);
+            setTimeout(() => { 
+                overlay.style.display = 'none';
+                runFinalAudit();
+            }, 5000);
+        }
+
+        function runFinalAudit() {
             const select = document.getElementById('course');
+            const score = document.getElementById('score').value;
             const cutoff = parseInt(select.value);
             const courseName = select.options[select.selectedIndex].text;
-            const alt = select.options[select.selectedIndex].getAttribute('data-alt');
             const pass = score >= cutoff;
             
-            document.getElementById('status').innerText = pass ? "ELIGIBILITY VERIFIED" : "ADVISORY ISSUED";
+            document.getElementById('status').innerText = pass ? "MERIT VERIFIED" : "ADVISORY ISSUED";
             document.getElementById('status').className = pass ? "text-green-500 font-black" : "text-yellow-500 font-black";
-            
             document.getElementById('advice').innerText = pass 
-                ? `Good day. Audit initiated. Statistical profile shows strength for ${courseName}. Institutional eligibility remains verified.`
-                : `High competition density detected for ${courseName}. With a score of ${score}, registry suggests ${alt} for merit stability.`;
+                ? `System verification complete. Score ${score} aligns with institutional merit requirements for ${courseName}.` 
+                : `Audit shows high density for ${courseName}. With ${score}, please consult the registry for alternatives.`;
             
             document.getElementById('result-box').classList.add('active');
-            window.auditPayload = { score, course: courseName, verdict: document.getElementById('status').innerText, advice: document.getElementById('advice').innerText };
+            window.auditPayload = { score, course: courseName, verdict: document.getElementById('status').innerText };
         }
 
         async function generateFormalPDF() {
@@ -129,50 +149,36 @@
             const doc = new jsPDF();
             const d = window.auditPayload;
 
-            // BACKGROUND HEADER
             doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 55, 'F');
-            
-            // LOGO
             const logo = document.getElementById('mainLogo');
             try { doc.addImage(logo, 'PNG', 92, 5, 25, 25); } catch(e) {}
 
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(14);
+            doc.setTextColor(255); doc.setFontSize(14);
             doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 42, null, null, "center");
-            doc.setFontSize(8);
-            doc.text("OFFICIAL REGISTRY VERIFICATION SYSTEM", 105, 48, null, null, "center");
 
-            // MAIN DATA
-            doc.setTextColor(40, 40, 40);
-            doc.setFontSize(10);
+            doc.setTextColor(40); doc.setFontSize(11);
             doc.text(`CANDIDATE SCORE: ${d.score}`, 20, 75);
-            doc.text(`CHOSEN PROGRAM: ${d.course}`, 20, 85);
-            doc.text(`AUDIT VERDICT: ${d.verdict}`, 20, 95);
+            doc.text(`PROGRAM: ${d.course}`, 20, 85);
+            doc.text(`STATUS: ${d.verdict}`, 20, 95);
 
-            // MANAGEMENT PORTRAITS IN PDF
-            const ids = ['img-gov', 'img-vc'];
-            let xPos = 20;
-            ids.forEach(id => {
-                const img = document.getElementById(id);
-                try { doc.addImage(img, 'JPEG', xPos, 110, 45, 50); } catch(e) {}
-                xPos += 60;
+            // Add Portraits
+            const imgs = ['img-gov', 'img-vc'];
+            let x = 20;
+            imgs.forEach(id => {
+                const i = document.getElementById(id);
+                try { doc.addImage(i, 'JPEG', x, 110, 45, 50); } catch(e) {}
+                x += 60;
             });
 
-            // PRAISE
-            doc.setFontSize(8);
-            doc.setTextColor(100);
-            const praise = [
-                "The University Management honors the Ondo State Government and Governing Council",
-                "for their dedication to the Blue Economy and academic excellence."
-            ];
-            doc.text(praise, 105, 180, null, null, "center");
+            doc.setFontSize(8); doc.setTextColor(100);
+            doc.text([
+                "The University Management honors the Ondo State Government and HE Lucky Aiyedatiwa",
+                "for their dedication to the Blue Economy and excellence."
+            ], 105, 175, null, null, "center");
 
-            // FOOTER
-            doc.setFillColor(242, 183, 5); doc.rect(20, 270, 170, 0.5, 'F');
-            doc.text("Zetra Silicon Valley Grade Infrastructure | Timestamp: " + new Date().toLocaleString(), 105, 280, null, null, "center");
-
+            doc.text("Zetra Silicon Valley Grade | Timestamp: " + new Date().toLocaleString(), 105, 280, null, null, "center");
             window.open(doc.output('bloburl'), '_blank');
         }
     </script>
 </body>
-                    </html>
+</html>
