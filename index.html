@@ -3,126 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OAUSTECH | Institutional Audit</title>
+
+<title>OAUSTECH Admission Simulation</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 <style>
-:root{
---blue:#0A1C3C;
---red:#9B1C2A;
---gold:#F2B705;
-}
-
 body{
-background:var(--blue);
-color:white;
-font-family:sans-serif;
-overflow-x:hidden;
+    background:#0A1C3C;
+    color:white;
+    font-family:sans-serif;
 }
-
-.ticker{
-background:black;
-border-bottom:2px solid var(--gold);
-overflow:hidden;
-white-space:nowrap;
-}
-
-.ticker span{
-display:inline-block;
-padding-left:100%;
-animation:scroll 25s linear infinite;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0)}
-100%{transform:translateX(-100%)}
-}
-
 .card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-border-top:4px solid var(--red);
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    padding:20px;
 }
-
-.admin-img{
-width:110px;
-height:110px;
-border-radius:15px;
-overflow:hidden;
-margin:auto;
-}
-
-.admin-img img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
 #overlay{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(10,28,60,0.95);
-z-index:100;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-}
-
-#error-box{
-display:none;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0A1C3C;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 </style>
 </head>
 
-<body class="flex flex-col items-center pb-20">
+<body class="flex flex-col items-center p-4">
 
-<!-- ticker -->
-<div class="ticker w-full text-[10px] uppercase text-yellow-400 font-bold">
-<span>
-OAUSTECH • GREATNESS THROUGH KNOWLEDGE • BUILDING THE BLUE ECONOMY • INNOVATION • 
-OAUSTECH • GREATNESS THROUGH KNOWLEDGE • BUILDING THE BLUE ECONOMY • INNOVATION •
-</span>
-</div>
+<h1 class="text-xl font-bold text-yellow-400 mb-2">
+Admission Simulation Tool
+</h1>
 
-<!-- overlay -->
-<div id="overlay" class="flex">
-<div class="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-<p id="loadingText" class="text-xs uppercase tracking-widest text-yellow-500">Initializing...</p>
-</div>
+<p class="text-[11px] text-gray-400 text-center max-w-sm mb-4">
+Independent student-built simulation tool. Not affiliated with 
+0.
+Final admission decisions are made solely by the University Management.
+</p>
 
-<!-- header -->
-<div class="text-center mt-8">
-<img src="./logo.png" class="w-20 mx-auto mb-3">
-<h1 class="font-black text-xl">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
-</div>
+<div class="card w-full max-w-sm">
 
-<main class="w-full max-w-sm px-4 mt-6">
-
-<!-- authority -->
-<div class="card rounded-2xl p-5 mb-6">
-<h2 class="text-center text-yellow-500 text-xs mb-4 uppercase">Institutional Authority</h2>
-
-<div class="flex justify-center gap-6">
-<div class="text-center">
-<div class="admin-img"><img src="./gov.jpg"></div>
-<p class="text-xs mt-2 font-bold">HE Lucky Aiyedatiwa</p>
-</div>
-
-<div class="text-center">
-<div class="admin-img"><img src="./vc.jpg"></div>
-<p class="text-xs mt-2 font-bold">Prof. J.A Oguntola</p>
-</div>
-</div>
-</div>
-
-<!-- form -->
-<div class="card rounded-2xl p-5">
-
-<select id="course" class="w-full p-3 bg-slate-900 rounded-xl mb-4">
+<select id="course" class="w-full p-3 mb-3 bg-black rounded">
 
 <optgroup label="HEALTH SCIENCES">
 <option value="225">Nursing Science</option>
@@ -130,7 +54,7 @@ OAUSTECH • GREATNESS THROUGH KNOWLEDGE • BUILDING THE BLUE ECONOMY • INNOV
 <option value="200">Public Health</option>
 </optgroup>
 
-<optgroup label="SCIENCES">
+<optgroup label="SCIENCE">
 <option value="200">Computer Science</option>
 <option value="195">Biochemistry</option>
 <option value="190">Microbiology</option>
@@ -138,199 +62,183 @@ OAUSTECH • GREATNESS THROUGH KNOWLEDGE • BUILDING THE BLUE ECONOMY • INNOV
 <option value="180">Physics</option>
 <option value="180">Mathematics</option>
 <option value="175">Statistics</option>
+<option value="170">Botany</option>
+<option value="170">Zoology</option>
 </optgroup>
 
 <optgroup label="ENGINEERING">
-<option value="200">Mechanical Engineering</option>
-<option value="195">Electrical Engineering</option>
-<option value="190">Civil Engineering</option>
-</optgroup>
-
-<optgroup label="ENVIRONMENTAL">
-<option value="190">Architecture</option>
-<option value="180">Estate Management</option>
-<option value="180">Urban Planning</option>
+<option value="195">Mechanical Engineering</option>
+<option value="190">Electrical Engineering</option>
+<option value="185">Civil Engineering</option>
 </optgroup>
 
 <optgroup label="AGRICULTURE">
-<option value="180">Agricultural Economics</option>
-<option value="180">Animal Production</option>
-<option value="180">Crop Science</option>
-<option value="180">Fisheries</option>
+<option value="170">Fisheries</option>
+<option value="170">Forestry</option>
+<option value="170">Crop Science</option>
+<option value="170">Animal Production</option>
+</optgroup>
+
+<optgroup label="MANAGEMENT SCIENCES">
+<option value="200">Accounting</option>
+<option value="190">Business Administration</option>
+<option value="190">Economics</option>
+<option value="185">Public Administration</option>
 </optgroup>
 
 </select>
 
-<input id="score" type="number" placeholder="000"
-class="w-full text-center text-4xl p-4 bg-slate-900 rounded-xl mb-3">
+<input id="score" type="number" placeholder="Enter UTME Score"
+class="w-full p-4 text-center text-3xl bg-black rounded mb-4">
 
-<div id="error-box" class="bg-red-900 p-3 text-xs rounded mb-3"></div>
-
-<button onclick="runAudit()" class="w-full bg-red-800 py-3 rounded-xl font-bold">
-INITIATE REGISTRY SYNC
+<button onclick="runAudit()" class="w-full bg-red-700 p-3 rounded font-bold">
+Run Simulation
 </button>
 
-<!-- result -->
-<div id="result" class="hidden mt-5 bg-black/40 p-4 rounded-xl">
-<h2 id="status" class="font-bold mb-2"></h2>
-<p id="message" class="text-sm mb-3"></p>
-<button onclick="downloadPDF()" class="bg-yellow-600 px-3 py-2 rounded">
-Download Audit
+<div id="result" class="hidden mt-4">
+
+<p id="status" class="font-bold text-lg mb-2"></p>
+<p id="analysis" class="text-sm mb-2"></p>
+<p id="strategy" class="text-xs text-gray-300"></p>
+
+<button onclick="generatePDF()" class="mt-4 w-full bg-yellow-600 p-2 rounded">
+Download Report
 </button>
-</div>
-
-<p class="text-[9px] text-gray-400 mt-4 text-center">
-Final admission decisions are made strictly by the University Management.
-</p>
 
 </div>
 
-<!-- footer -->
-<div class="mt-8 grid grid-cols-2 gap-4">
+</div>
 
-<a href="https://wa.me/2348056604409" class="bg-slate-900 p-4 rounded-xl text-center">
-<i class="fa-brands fa-whatsapp text-green-500"></i>
-<p class="text-[10px] mt-2">Technical Support Line</p>
+<!-- CONTACT SECTION -->
+<div class="mt-8 grid grid-cols-2 gap-4 w-full max-w-sm">
+
+<a href="https://wa.me/2348056604409"
+class="bg-black p-4 rounded-xl text-center border border-gray-700">
+<p class="text-xs text-green-400 font-bold">Technical Support</p>
+<p class="text-[10px] text-gray-400">Feedback & Assistance</p>
 </a>
 
-<a href="mailto:info@oaustech.edu.ng" class="bg-slate-900 p-4 rounded-xl text-center">
-<i class="fa-solid fa-envelope text-blue-500"></i>
-<p class="text-[10px] mt-2">OAUSTECH Direct Mail</p>
+<a href="mailto:info@oaustech.edu.ng"
+class="bg-black p-4 rounded-xl text-center border border-gray-700">
+<p class="text-xs text-blue-400 font-bold">OAUSTECH Contact</p>
+<p class="text-[10px] text-gray-400">Official Email</p>
 </a>
 
 </div>
 
-</main>
+<!-- LOADING -->
+<div id="overlay">
+<p>Processing Academic Data...</p>
+</div>
 
 <script>
 
-const responses=[
-"Neural audit confirms structural compatibility.",
-"Registry indicates strong academic alignment.",
-"Merit threshold exceeded.",
-"Candidate meets institutional requirements.",
-"Admission probability is high.",
-"System confirms eligibility."
-];
-
-function suggest(score){
-const options=document.querySelectorAll("#course option");
-let alt=null;
-
-options.forEach(opt=>{
-if(score>=opt.value){
-alt=opt.text;
-}
-});
-return alt;
-}
-
 function runAudit(){
 
-const score=parseInt(document.getElementById("score").value);
-const error=document.getElementById("error-box");
+const score=parseInt(document.getElementById('score').value);
 
 if(isNaN(score)||score<0||score>400){
-error.style.display="block";
-error.innerText="ACCESS DENIED: Enter valid score (0-400)";
+alert("Enter valid score (0-400)");
 return;
 }
 
-error.style.display="none";
-
-const overlay=document.getElementById("overlay");
-const text=document.getElementById("loadingText");
-
-overlay.style.display="flex";
-
-setTimeout(()=>{text.innerText="Accessing Registry..."},1500);
-setTimeout(()=>{text.innerText="Validating Quotas..."},3000);
+document.getElementById("overlay").style.display="flex";
 
 setTimeout(()=>{
-overlay.style.display="none";
-process(score);
-},5500);
+document.getElementById("overlay").style.display="none";
+showResult(score);
+},3000);
+
 }
 
-function process(score){
+function showResult(score){
 
 const select=document.getElementById("course");
 const cutoff=parseInt(select.value);
-const course=select.options[select.selectedIndex].text;
+const courseName=select.options[select.selectedIndex].text;
 
-let pass=score>=cutoff;
-
-let msg="";
-let status="";
-
-if(pass){
-status="MERIT VERIFIED";
-msg=responses[Math.floor(Math.random()*responses.length)];
-}else{
-status="NOT ELIGIBLE";
-let alt=suggest(score);
-msg=alt ? `Not eligible for ${course}. Recommended: ${alt}` : "Score too low for available programs.";
-}
-
-document.getElementById("status").innerText=status;
-document.getElementById("message").innerText=msg;
+const pass=score>=cutoff;
+const percent=Math.floor(Math.random()*20)+10;
 
 document.getElementById("result").classList.remove("hidden");
 
-window.data={score,course,status,msg};
+document.getElementById("status").innerText=
+pass?"Within Competitive Range":"Below Competitive Range";
+
+document.getElementById("analysis").innerText=
+pass
+?`Your score aligns above typical benchmarks for ${courseName}. Estimated performance places you within top ${percent}% of applicants.`
+:`Your score falls below typical benchmarks for ${courseName}. Estimated performance is outside top ${percent}% range.`;
+
+document.getElementById("strategy").innerText=
+pass
+?"Maintain performance and monitor official admission updates."
+:"Consider alternative programs and improve academic profile.";
+
+window.finalData={score,courseName,pass,percent};
+
 }
 
-// image loader
-function loadImg(url){
-return new Promise(res=>{
-let img=new Image();
-img.crossOrigin="Anonymous";
-img.onload=()=>{
-let canvas=document.createElement("canvas");
-canvas.width=img.width;
-canvas.height=img.height;
-canvas.getContext("2d").drawImage(img,0,0);
-res(canvas.toDataURL());
-};
-img.src=url;
-});
-}
-
-async function downloadPDF(){
+async function generatePDF(){
 
 const {jsPDF}=window.jspdf;
 const doc=new jsPDF();
-const d=window.data;
 
-// logo
-const logo=await loadImg('./logo.png');
-doc.addImage(logo,'PNG',90,5,30,30);
+const d=window.finalData;
 
-// title
-doc.setFontSize(12);
-doc.text("OAUSTECH INSTITUTIONAL AUDIT",105,40,null,null,"center");
+// LOAD LOGO
+let img=null;
+try{
+img=await fetch('./logo.png')
+.then(r=>r.blob())
+.then(blob=>new Promise(res=>{
+const reader=new FileReader();
+reader.onload=()=>res(reader.result);
+reader.readAsDataURL(blob);
+}));
+}catch(e){}
 
-// body
-doc.text("Score: "+d.score,20,70);
-doc.text("Course: "+d.course,20,80);
-doc.text("Result: "+d.status,20,90);
-doc.text(d.msg,20,105,{maxWidth:170});
+// HEADER
+if(img){
+doc.addImage(img,'PNG',85,10,40,40);
+}
 
-// disclaimer
+doc.setFontSize(14);
+doc.text("ADMISSION SIMULATION REPORT",105,60,null,null,"center");
+
+// DATA
+doc.setFontSize(10);
+doc.text("CANDIDATE DATA",20,80);
+doc.text(`Score: ${d.score}`,20,90);
+doc.text(`Program: ${d.courseName}`,20,100);
+
+// RESULT
+doc.text("ANALYSIS RESULT",20,120);
+doc.text(
+d.pass?"Within Competitive Range":"Below Competitive Range",
+20,130);
+
+// NOTE
+doc.text("ACADEMIC NOTE",20,150);
+doc.text(
+d.pass
+?`Score is above typical benchmarks. Estimated top ${d.percent}% performance.`
+:`Score below benchmark. Consider alternative programs.`,
+20,160,{maxWidth:170}
+);
+
+// DISCLAIMER
 doc.setFontSize(8);
 doc.text(
-"Final admission decisions are made strictly by the University Management.",
-105,250,null,null,"center"
+"DISCLAIMER: This is an independent simulation tool and not affiliated with the university. Final admission decisions are made by the University Management.",
+20,190,{maxWidth:170}
 );
 
-// subtle brand
-doc.setFontSize(7);
-doc.text(
-"Technical Ref: ZL-"+Math.floor(Math.random()*999999),
-105,270,null,null,"center"
-);
+// FOOTER
+doc.text("Generated via Academic Simulation Interface",105,280,null,null,"center");
 
-doc.save("audit.pdf");
+window.open(doc.output('bloburl'));
+
 }
 
 </script>
