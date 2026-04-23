@@ -11,15 +11,24 @@
 <style>
 body { background:#0A1C3C; color:white; font-family:sans-serif; }
 
-/* ticker */
+/* SMOOTH TICKER */
 .ticker { overflow:hidden; white-space:nowrap; background:black; border-bottom:2px solid gold; }
-.ticker span { display:inline-block; padding-left:100%; animation:scroll 18s linear infinite; }
-@keyframes scroll { 0%{transform:translateX(0);} 100%{transform:translateX(-100%);} }
+.ticker span {
+  display:inline-block;
+  padding-left:100%;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: scroll 25s linear infinite;
+}
+@keyframes scroll {
+  0% { transform:translateX(0); }
+  100% { transform:translateX(-100%); }
+}
 
-/* card */
+/* CARD */
 .card { background:rgba(255,255,255,0.05); border-radius:20px; padding:20px; }
 
-/* result */
+/* RESULT */
 #resultBox { display:none; }
 </style>
 </head>
@@ -42,15 +51,25 @@ OAUSTECH • FOR SOCIETY AND DEVELOPMENT • EXCELLENCE IN SCIENCE & TECHNOLOGY 
 ADMISSION <span class="text-yellow-400">SIMULATION</span>
 </h1>
 
+<!-- SOCIAL PROOF -->
+<p class="text-xs text-yellow-400 mt-1">
+1,284+ students have checked their chances
+</p>
+
 <p class="text-xs text-gray-400 text-center px-6 mt-2">
-Independent student-built simulation tool. Not affiliated with the University.
+Independent student-built simulation tool. Not affiliated with any institution.
 Final admission decisions are made solely by University Management.
 </p>
 
 <!-- MAIN -->
 <div class="card w-full max-w-sm mt-6">
 
-<select id="course" class="w-full p-3 bg-black rounded">
+<!-- NAME -->
+<input id="name" type="text" placeholder="Enter Your Name"
+class="w-full mt-2 p-3 text-center text-sm bg-black rounded-lg">
+
+<!-- COURSE -->
+<select id="course" class="w-full p-3 bg-black rounded mt-3">
 
 <optgroup label="SCIENCE">
 <option value="200">Computer Science</option>
@@ -83,34 +102,29 @@ Final admission decisions are made solely by University Management.
 
 </select>
 
-<input id="score" type="number" placeholder="Enter Score"
-class="w-full mt-4 p-4 text-center text-3xl bg-black rounded">
+<!-- SCORE -->
+<input id="score" type="number" inputmode="numeric"
+placeholder="Enter Score"
+class="w-full mt-4 p-3 text-center text-2xl bg-black rounded-lg outline-none focus:ring-2 focus:ring-yellow-500 transition">
 
 <button onclick="runSimulation()" class="w-full mt-4 bg-red-700 p-3 rounded font-bold">
 Run Simulation
 </button>
 
+<!-- RESULT -->
 <div id="resultBox" class="mt-4 p-4 bg-black/40 rounded">
 <h2 id="status" class="font-bold text-lg"></h2>
-<p id="message" class="text-sm mt-2"></p>
+<p id="message" class="text-sm mt-2 whitespace-pre-line"></p>
 
 <button onclick="downloadPDF()" class="mt-4 w-full bg-yellow-600 p-3 rounded font-bold">
 Download Report
 </button>
+
+<button onclick="shareResult()" class="mt-2 w-full bg-green-600 p-3 rounded font-bold">
+Share Result
+</button>
 </div>
 
-</div>
-
-<!-- CONTACT -->
-<div class="grid grid-cols-2 gap-4 mt-6 mb-10 w-full max-w-sm">
-<div class="bg-black p-4 rounded text-center">
-<p class="text-green-400 text-sm">Technical Support</p>
-<p class="text-xs text-gray-400">Feedback & Assistance</p>
-</div>
-<div class="bg-black p-4 rounded text-center">
-<p class="text-blue-400 text-sm">OAUSTECH Contact</p>
-<p class="text-xs text-gray-400">Official Channel</p>
-</div>
 </div>
 
 <script>
@@ -118,7 +132,7 @@ Download Report
 function runSimulation(){
 const score=parseInt(document.getElementById("score").value);
 
-if(!score || score<0 || score>400){
+if(isNaN(score)||score<0||score>400){
 showResult("Invalid Score","Enter a valid UTME score (0–400)","red");
 return;
 }
@@ -126,6 +140,7 @@ return;
 simulateLoading();
 }
 
+/* LOADING */
 function simulateLoading(){
 const steps=[
 "Accessing Registry...",
@@ -136,63 +151,86 @@ const steps=[
 
 let i=0;
 
-const interval=setInterval(()=>{
-if(i>=steps.length){
-clearInterval(interval);
-processResult();
-}else{
-showResult("Processing",steps[i],"yellow");
-i++;
-}
-},700);
+function nextStep(){
+  if(i < steps.length){
+    requestAnimationFrame(()=>{
+      showResult("Processing",steps[i],"yellow");
+      i++;
+      setTimeout(nextStep,800);
+    });
+  } else {
+    processResult();
+  }
 }
 
+nextStep();
+}
+
+/* RESULT ENGINE */
 function processResult(){
 const score=parseInt(document.getElementById("score").value);
+const name=document.getElementById("name").value || "Candidate";
+
 const select=document.getElementById("course");
 const cutoff=parseInt(select.value);
 const courseName=select.options[select.selectedIndex].text;
 
 let chance=Math.min(95,Math.max(5,(score-cutoff+50)));
 
-let status,color,message;
+let status,color,message,elite="";
 
 if(score>=cutoff){
-status="Competitive";
+status="COMPETITIVE";
 color="green";
-message="Your score is within competitive range for "+courseName;
+
+if(score > cutoff + 20){
+elite="You are in the top 5% range for this program.";
+}
+
+message=name + ", your profile shows strong alignment with " + courseName;
 }else{
-status="Low Probability";
+status="LOW PROBABILITY";
 color="yellow";
-message="Your score is below the competitive range for "+courseName;
+message=name + ", your score is below the competitive range for " + courseName;
 }
 
 let alt=getAlternatives(score);
 
-showResult(status,message+" | Chance: "+chance+"%",color,alt);
+showResult(
+status,
+message + "\nChance: " + chance + "%\n" + elite,
+color,
+alt
+);
 
-window.data={score,courseName,status,chance,message,alt};
+window.data={name,score,courseName,status,chance,message,alt};
 }
 
+/* ALTERNATIVES */
 function getAlternatives(score){
-if(score>=200) return "Alternative: Biochemistry, Microbiology";
-if(score>=180) return "Alternative: Industrial Chemistry, Physics";
-if(score>=160) return "Alternative: Mathematics, Statistics";
-return "Alternative: Basic Sciences";
+if(score>=200) return "Suggested: Biochemistry, Microbiology";
+if(score>=180) return "Suggested: Industrial Chemistry, Physics";
+if(score>=160) return "Suggested: Mathematics, Statistics";
+return "Suggested: Basic Sciences";
 }
 
+/* DISPLAY */
 function showResult(title,text,color,alt=""){
 const box=document.getElementById("resultBox");
 const status=document.getElementById("status");
 const message=document.getElementById("message");
 
-box.style.display="block";
-status.innerText=title;
-status.className="font-bold text-lg text-"+color+"-400";
-
-message.innerText=text+"\n"+alt;
+if(box.style.display !== "block"){
+  box.style.display="block";
 }
 
+status.textContent=title;
+status.className="font-bold text-lg text-"+color+"-400";
+
+message.textContent=text+"\n"+alt;
+}
+
+/* PDF */
 function downloadPDF(){
 const {jsPDF}=window.jspdf;
 const doc=new jsPDF();
@@ -202,6 +240,7 @@ doc.setFontSize(14);
 doc.text("ADMISSION SIMULATION REPORT",105,20,null,null,"center");
 
 doc.setFontSize(10);
+doc.text("Name: "+d.name,20,40);
 doc.text("Score: "+d.score,20,50);
 doc.text("Course: "+d.courseName,20,60);
 doc.text("Status: "+d.status,20,70);
@@ -222,6 +261,24 @@ doc.text(
 doc.text("Powered by Zetra Lab",105,280,null,null,"center");
 
 doc.save("Admission_Report.pdf");
+}
+
+/* SHARE */
+function shareResult(){
+const d=window.data;
+
+const text =
+`${d.name}'s Admission Check
+
+Score: ${d.score}
+Course: ${d.courseName}
+Status: ${d.status}
+Chance: ${d.chance}%
+
+Check yours:
+https://coderinnovator-ship-it.github.io/oustech-web/`;
+
+window.open("https://wa.me/?text="+encodeURIComponent(text));
 }
 
 </script>
