@@ -23,7 +23,6 @@
         #loading-overlay { display: none; background: rgba(10, 28, 60, 0.98); position: fixed; inset: 0; z-index: 100; flex-direction: column; align-items: center; justify-content: center; }
         #result-box { max-height: 0; opacity: 0; overflow: hidden; transition: 0.8s ease; }
         #result-box.active { max-height: 1500px; opacity: 1; margin-top: 20px; }
-
         .disclaimer-text { font-size: 7px; color: #64748b; text-align: center; line-height: 1.4; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
@@ -31,12 +30,12 @@
 
     <div id="loading-overlay">
         <div class="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p id="loading-step" class="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-500">Synchronizing Management Data...</p>
+        <p id="loading-step" class="text-[10px] font-black uppercase tracking-[0.3em] text-yellow-500 text-center px-8">Synchronizing Management Data...</p>
     </div>
 
     <div class="ticker-container w-full">
         <div class="ticker-content text-[10px] font-bold text-yellow-400 uppercase tracking-widest">
-            OFFICIAL REGISTRY AUDIT • ZETRA COGNITIVE SYSTEMS • BUILDING THE BLUE ECONOMY •
+            OFFICIAL REGISTRY AUDIT • ZETRA COGNITIVE SYSTEMS • BUILDING THE BLUE ECONOMY • EXCELLENCE IN SCIENCE & TECHNOLOGY •
         </div>
     </div>
 
@@ -59,7 +58,7 @@
                 </div>
                 <div class="text-center">
                     <div class="admin-img-frame"><img src="./chan.jpg" onerror="this.src='https://via.placeholder.com/150?text=Chancellor'"></div>
-                    <p class="text-[6px] font-black mt-2 text-white uppercase">University Chancellor</p>
+                    <p class="text-[6px] font-black mt-2 text-white uppercase">The Chancellor</p>
                     <p class="text-[5px] text-slate-500 uppercase">Governance</p>
                 </div>
                 <div class="text-center">
@@ -71,16 +70,24 @@
         </section>
 
         <div class="card-glass rounded-[2rem] p-6 shadow-2xl">
-            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Faculty Selection</label>
+            <label class="text-[9px] font-bold text-slate-400 uppercase mb-2 block">Faculty Registry</label>
             <select id="course" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-[11px] mb-4 outline-none">
-                <optgroup label="PRIMARY HEALTH">
+                <optgroup label="HEALTH SCIENCES">
                     <option value="225">Nursing Science (BNSc)</option>
                     <option value="215">Medical Laboratory Science (MLS)</option>
+                    <option value="200">Public Health</option>
                 </optgroup>
-                <optgroup label="APPLIED TECH">
+                <optgroup label="APPLIED SCIENCES">
                     <option value="200">Computer Science</option>
                     <option value="195">Biochemistry</option>
                     <option value="190">Microbiology</option>
+                    <option value="180">Industrial Chemistry</option>
+                    <option value="175">Statistics</option>
+                </optgroup>
+                <optgroup label="ENGINEERING">
+                    <option value="195">Mechanical Engineering</option>
+                    <option value="190">Electrical Engineering</option>
+                    <option value="185">Civil Engineering</option>
                 </optgroup>
             </select>
 
@@ -113,9 +120,8 @@
     </main>
 
     <script>
-        // Variety of 50 different high-end professional responses
         const techResponses = [
-            "Institutional merit parameters verified. Registry suggests documentation.",
+            "Institutional merit parameters verified. Registry suggests immediate documentation.",
             "Structural compatibility with faculty standards is confirmed at the merit level.",
             "Benchmark exceeded. Academic trajectory aligns with Management excellence goals.",
             "Data synchronization complete. Elite standing within program registry verified.",
@@ -123,13 +129,17 @@
             "Registry handshake successful. Admission probability is statistically high.",
             "Neural audit confirms high-level merit advantage for this academic path.",
             "Institutional honors anticipated based on current entrance analytics.",
-            "Verified. Candidate satisfies the core structural requirements for admission.",
-            "Audit complete. Statistical standing shows significant merit robustness."
+            "Verified. Candidate satisfies core structural requirements for admission.",
+            "Audit complete. Statistical standing shows significant merit robustness.",
+            "Merit threshold crossed. System indicates high probability of faculty clearance.",
+            "High-grade UTME performance identified. Faculty readiness confirmed.",
+            "Candidate profile displays premier alignment with current session quotas.",
+            "Registry handshake complete. Verification confirms eligibility standing.",
+            "Neural scan successful. Merit standing remains stable for program entry."
         ];
 
         function runSecureAudit() {
             const score = parseInt(document.getElementById('score').value);
-            // REJECTS RUBBISH SCORES
             if (isNaN(score) || score < 0 || score > 400) {
                 alert("ACCESS DENIED: Invalid Score Registry. UTME range must be 0-400.");
                 return;
@@ -144,7 +154,7 @@
             setTimeout(() => { 
                 overlay.style.display = 'none';
                 displayFinalResult(score);
-            }, 5500); // Institutional 5.5s Delay
+            }, 5500);
         }
 
         function displayFinalResult(score) {
@@ -157,7 +167,7 @@
             document.getElementById('status').className = pass ? "text-green-500 font-black" : "text-yellow-500 font-black";
             
             const randomMsg = techResponses[Math.floor(Math.random() * techResponses.length)];
-            document.getElementById('advice').innerText = pass ? randomMsg : `Audit shows competition density for ${courseName}. Consulting registry is advised.`;
+            document.getElementById('advice').innerText = pass ? randomMsg : `Audit indicates high density for ${courseName}. Registry consultation advised.`;
             
             document.getElementById('result-box').classList.add('active');
             window.finalData = { score, course: courseName, verdict: document.getElementById('status').innerText, advice: document.getElementById('advice').innerText };
@@ -168,21 +178,18 @@
             const doc = new jsPDF();
             const d = window.finalData;
 
-            // HEADER BRANDING
             doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 50, 'F');
             doc.setTextColor(255); doc.setFontSize(14);
             doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 30, null, null, "center");
             doc.setFontSize(8);
             doc.text("OFFICIAL ELIGIBILITY VERIFICATION SYSTEM", 105, 36, null, null, "center");
 
-            // CANDIDATE DATA
             doc.setTextColor(40); doc.setFontSize(10);
             doc.text(`SCORE: ${d.score}`, 20, 70);
             doc.text(`PROGRAM: ${d.course}`, 20, 80);
             doc.text(`VERDICT: ${d.verdict}`, 20, 90);
-            doc.text(`NOTE: ${d.advice}`, 20, 100, { maxWidth: 170 });
+            doc.text(`AUDIT NOTE: ${d.advice}`, 20, 100, { maxWidth: 170 });
 
-            // LEGAL DISCLAIMER ON PDF
             doc.setFontSize(7); doc.setTextColor(150);
             doc.text([
                 "LEGAL DISCLAIMER: This document is a preliminary audit result.",
@@ -190,24 +197,22 @@
                 "and the Governing Council. This record is for verification purposes only."
             ], 105, 125, null, null, "center");
 
-            // PORTRAITS
             try { 
                 const g = document.querySelector('img[src*="gov.jpg"]');
                 const v = document.querySelector('img[src*="vc.jpg"]');
-                doc.addImage(g, 'JPEG', 20, 150, 40, 45); 
-                doc.addImage(v, 'JPEG', 150, 150, 40, 45); 
+                doc.addImage(g, 'JPEG', 30, 150, 40, 45); 
+                doc.addImage(v, 'JPEG', 140, 150, 40, 45); 
             } catch(e){}
 
-            // INSTITUTIONAL PRAISE
             doc.setFontSize(8); doc.setTextColor(80);
             doc.text([
                 "The University honors HE Lucky Aiyedatiwa and the Governing Council",
                 "for their dedication to the Blue Economy and academic excellence."
-            ], 105, 210, null, null, "center");
+            ], 105, 215, null, null, "center");
 
             doc.text("Infrastructure Powered by Zetra Lab | Generated: " + new Date().toLocaleString(), 105, 280, null, null, "center");
             window.open(doc.output('bloburl'), '_blank');
         }
     </script>
 </body>
-                                                                               </html>
+    </html>
