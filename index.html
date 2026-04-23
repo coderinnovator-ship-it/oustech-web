@@ -12,20 +12,17 @@
         :root { --oaustech-blue: #0A1C3C; --oaustech-red: #9B1C2A; --oaustech-gold: #F2B705; }
         body { background: var(--oaustech-blue); font-family: 'Plus Jakarta Sans', sans-serif; color: white; margin: 0; overflow-x: hidden; }
         
-        /* RESTORED: Infinite Ticker */
         .ticker-container { background: #000; border-bottom: 2px solid var(--oaustech-gold); overflow: hidden; white-space: nowrap; padding: 12px 0; }
         .ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
         .card-glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-top: 5px solid var(--oaustech-red); }
-        .btn-official { background: var(--oaustech-red); border-bottom: 4px solid #7D1621; cursor: pointer; transition: 0.3s; }
-        .btn-official:active { transform: translateY(2px); border-bottom-width: 0; }
+        .btn-official { background: var(--oaustech-red); border-bottom: 4px solid #7D1621; cursor: pointer; }
         
         #terminal { background: #000; font-family: 'Courier New', monospace; font-size: 10px; color: #00ff00; padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px solid #333; display: none; }
         #result { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.8s ease-in-out; }
         #result.active { max-height: 2000px; opacity: 1; margin-top: 1.5rem; }
 
-        /* RESTORED: Logo Seal */
         .seal-main { width: 75px; height: 75px; background: white; border-radius: 50%; border: 3px solid var(--oaustech-gold); display: flex; align-items: center; justify-content: center; position: relative; }
         .seal-orbit { position: absolute; width: 95px; height: 95px; border: 1px dashed var(--oaustech-gold); border-radius: 50%; animation: spin 15s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -35,8 +32,8 @@
 
     <div class="ticker-container w-full">
         <div class="ticker-content text-[10px] font-bold text-yellow-400 uppercase tracking-widest">
-            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Silicon Valley Grade • </span>
-            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Silicon Valley Grade • </span>
+            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Lab Silicon Valley Grade • </span>
+            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Lab Silicon Valley Grade • </span>
         </div>
     </div>
 
@@ -45,54 +42,50 @@
             <div class="seal-orbit"></div>
             <span class="text-blue-900 font-black text-xs">OAUS</span>
         </div>
-        <h1 class="text-2xl font-black mt-4 uppercase text-center">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
+        <h1 class="text-2xl font-black mt-4 uppercase text-center tracking-tighter">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
     </header>
 
     <main class="w-full max-w-sm px-4">
         <div class="card-glass rounded-[2.5rem] p-6 shadow-2xl">
             <div class="space-y-5">
                 <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">Select Program Registry</label>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">Program Registry</label>
                     <select id="course" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-[11px] outline-none">
-                        <optgroup label="HEALTH SCIENCES (HIGH CUTOFF)">
-                            <option value="225" data-alt="MLS or Public Health">Nursing (BNSc)</option>
-                            <option value="215" data-alt="Public Health">Medical Laboratory Science (MLS)</option>
+                        <optgroup label="HEALTH SCIENCES">
+                            <option value="225" data-alt="Public Health or Biological Science">Nursing (BNSc)</option>
+                            <option value="215" data-alt="Public Health or Biological Science">Medical Laboratory Science (MLS)</option>
                             <option value="200" data-alt="Microbiology">Public Health</option>
                         </optgroup>
                         <optgroup label="TECH & ENGINEERING">
-                            <option value="200" data-alt="Statistics">Computer Science</option>
-                            <option value="190" data-alt="Physics">Mechanical Engineering</option>
-                            <option value="190" data-alt="Physics">Electrical and Electronics Engineering</option>
+                            <option value="200" data-alt="Statistics or Physics">Computer Science</option>
+                            <option value="190" data-alt="Applied Physics">Mechanical Engineering</option>
+                            <option value="190" data-alt="Applied Physics">Electrical and Electronics Engineering</option>
                             <option value="185" data-alt="Geophysics">Civil Engineering</option>
                         </optgroup>
                         <optgroup label="APPLIED SCIENCES">
-                            <option value="180" data-alt="Maths">Applied Physics</option>
-                            <option value="175" data-alt="Maths">Statistics</option>
+                            <option value="180" data-alt="Industrial Mathematics">Applied Physics</option>
+                            <option value="175" data-alt="Industrial Mathematics">Statistics</option>
                             <option value="175" data-alt="Statistics">Industrial Mathematics</option>
-                            <option value="180" data-alt="Biochemistry">Industrial Chemistry</option>
-                            <option value="190" data-alt="Microbiology">Biochemistry</option>
+                            <option value="180" data-alt="Applied Physics">Industrial Chemistry</option>
+                            <option value="195" data-alt="Biological Sciences">Biochemistry</option>
+                            <option value="190" data-alt="Biological Sciences">Microbiology</option>
                             <option value="180" data-alt="Botany">Zoology</option>
-                            <option value="190" data-alt="Biochemistry">Microbiology</option>
                             <option value="175" data-alt="Zoology">Botany</option>
-                        </optgroup>
-                        <optgroup label="EARTH SCIENCES">
-                            <option value="180" data-alt="Geophysics">Geology</option>
-                            <option value="180" data-alt="Geology">Geophysics</option>
                         </optgroup>
                         <optgroup label="AGRICULTURE">
                             <option value="165" data-alt="None">Agricultural Economics and Extension</option>
                             <option value="160" data-alt="None">Animal Production and Health</option>
                             <option value="160" data-alt="None">Crop, Soil and Pest Management</option>
                             <option value="160" data-alt="None">Fisheries and Aquaculture</option>
-                            <option value="175" data-alt="Biochemistry">Food Science and Technology</option>
-                            <option value="160" data-alt="None">Forestry, Wildlife and Environmental Mgt</option>
+                            <option value="175" data-alt="Biological Sciences">Food Science and Technology</option>
+                            <option value="160" data-alt="None">Forestry & Wildlife Mgt</option>
                         </optgroup>
                         <optgroup label="MANAGEMENT SCIENCES">
-                            <option value="180" data-alt="Business Mgt">Entrepreneurship</option>
-                            <option value="180" data-alt="Economics">Business Management</option>
+                            <option value="180" data-alt="Public Administration">Entrepreneurship</option>
+                            <option value="180" data-alt="Project Management">Business Management</option>
                             <option value="190" data-alt="Accounting">Economics</option>
-                            <option value="175" data-alt="Business Mgt">Project Management</option>
-                            <option value="175" data-alt="Public Admin">Public Administration</option>
+                            <option value="175" data-alt="Business Management">Project Management</option>
+                            <option value="175" data-alt="Business Management">Public Administration</option>
                             <option value="195" data-alt="Economics">Accounting</option>
                         </optgroup>
                     </select>
@@ -103,7 +96,7 @@
                     <input type="number" id="score" placeholder="000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-5xl font-black text-white text-center outline-none">
                 </div>
 
-                <button onclick="startAudit()" class="w-full btn-official py-4 rounded-xl font-black text-[11px] tracking-widest uppercase">Perform Registry Sync</button>
+                <button onclick="startSync()" class="w-full btn-official py-4 rounded-xl font-black text-[11px] tracking-widest uppercase">Execute Registry Audit</button>
             </div>
 
             <div id="terminal"></div>
@@ -112,7 +105,7 @@
                 <div id="status" class="text-lg font-black uppercase mb-4"></div>
                 <div class="mb-4">
                     <div class="flex justify-between text-[8px] font-bold uppercase mb-1">
-                        <span>Admission Pressure (Density)</span>
+                        <span>Merit Pressure Index</span>
                         <span id="pressureText">0%</span>
                     </div>
                     <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -120,11 +113,11 @@
                     </div>
                 </div>
                 <p id="msg" class="text-slate-300 text-xs font-medium leading-relaxed mb-6 italic"></p>
-                <button onclick="downloadPDF()" class="w-full bg-yellow-600 p-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg">Generate Report</button>
+                <button onclick="downloadPDF()" class="w-full bg-yellow-600 p-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg">Download Official Audit</button>
             </div>
 
-            <div class="mt-6 p-4 border border-red-900/40 bg-red-900/10 rounded-xl text-[8px] text-center text-red-300 leading-relaxed uppercase font-bold tracking-tighter">
-                Registry Sync Powered by Zetra Silicon Valley Grade Systems
+            <div class="mt-6 p-4 border border-red-900/40 bg-red-900/10 rounded-xl text-[8px] text-center text-red-300 leading-relaxed font-bold tracking-tight uppercase">
+                Audit Verified by Zetra Silicon Valley Grade Infrastructure
             </div>
         </div>
     </main>
@@ -132,51 +125,51 @@
     <div class="w-full max-w-sm grid grid-cols-2 gap-3 px-4 mt-6">
         <a href="https://wa.me/2348056604409" class="flex items-center justify-center gap-2 p-4 rounded-2xl bg-slate-900 border border-slate-800">
             <i class="fa-brands fa-whatsapp text-green-500"></i>
-            <span class="text-[9px] font-bold uppercase">WhatsApp</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">WhatsApp</span>
         </a>
         <a href="mailto:zetralab@gmail.com" class="flex items-center justify-center gap-2 p-4 rounded-2xl bg-slate-900 border border-slate-800">
             <i class="fa-solid fa-envelope text-blue-500"></i>
-            <span class="text-[9px] font-bold uppercase">Gmail</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Email</span>
         </a>
     </div>
 
     <script>
-        function startAudit() {
+        function startSync() {
             const score = document.getElementById('score').value;
             if(!score) return;
             const term = document.getElementById('terminal');
             document.getElementById('result').classList.remove('active');
             term.style.display = 'block';
-            term.innerHTML = "> Establish Zetra Cloud Link...<br>> Verifying Program Merit...<br>> Final Verdict Ready.";
-            setTimeout(() => { term.style.display = 'none'; showResult(); }, 1000);
+            term.innerHTML = "> Establishing Secure Registry Tunnel...<br>> Fetching Departmental Benchmarks...<br>> Analyzing Merit Capacity...";
+            setTimeout(() => { term.style.display = 'none'; showVerdict(); }, 1200);
         }
 
-        function showResult() {
+        function showVerdict() {
             const score = parseInt(document.getElementById('score').value);
             const select = document.getElementById('course');
             const cutoff = parseInt(select.value);
             const courseName = select.options[select.selectedIndex].text;
             const alt = select.options[select.selectedIndex].getAttribute('data-alt');
             
-            const isSafe = score >= cutoff;
-            let pressure = isSafe ? Math.max(10, 50 - (score - cutoff)) : Math.min(98, 75 + (cutoff - score));
+            const isQualified = score >= cutoff;
+            let pressure = isQualified ? Math.max(10, 50 - (score - cutoff)) : Math.min(98, 75 + (cutoff - score));
 
             const st = document.getElementById('status');
-            st.innerText = isSafe ? "ELIGIBILITY VERIFIED" : "ADVISORY REQUIRED";
-            st.className = isSafe ? "text-green-500 text-lg font-black uppercase" : "text-yellow-500 text-lg font-black uppercase";
+            st.innerText = isQualified ? "ELIGIBILITY CONFIRMED" : "ADVISORY REQUIRED";
+            st.className = isQualified ? "text-green-500 text-lg font-black uppercase" : "text-yellow-500 text-lg font-black uppercase";
             
             const bar = document.getElementById('pressureBar');
             bar.style.width = pressure + "%";
             bar.style.backgroundColor = pressure > 70 ? "#9B1C2A" : "#10B981";
             document.getElementById('pressureText').innerText = pressure + "% PRESSURE";
 
-            const msg = isSafe 
-                ? `Excellent. Your score of ${score} is robust for ${courseName} in the 2026 session.`
-                : `High competitive density for ${courseName}. With ${score}, Zetra suggests checking ${alt}.`;
+            const msg = isQualified 
+                ? `Excellent performance profile. Your score of ${score} is highly competitive for the ${courseName} program.`
+                : `Registry alerts high competitive pressure for ${courseName}. With a score of ${score}, Zetra suggests prioritizing ${alt} for merit stability.`;
             
             document.getElementById('msg').innerText = msg;
             document.getElementById('result').classList.add('active');
-            window.lastAudit = { score, courseName, status: st.innerText, msg: msg };
+            window.lastAudit = { score, courseName, status: st.innerText, msg: msg, pressure: pressure + "%" };
         }
 
         function downloadPDF() {
@@ -184,30 +177,30 @@
             const doc = new jsPDF();
             const d = window.lastAudit;
 
-            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 45, 'F');
-            doc.setTextColor(255); doc.setFontSize(16); doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 25, null, null, "center");
+            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 50, 'F');
+            doc.setTextColor(255); doc.setFontSize(18); doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 30, null, null, "center");
 
             doc.setTextColor(40); doc.setFontSize(11);
-            doc.text(`Academic Program: ${d.courseName}`, 20, 65);
-            doc.text(`UTME Score: ${d.score}`, 20, 75);
-            doc.text(`Registry Verdict: ${d.status}`, 20, 85);
-            doc.text(doc.splitTextToSize(d.msg, 170), 20, 100);
+            doc.text(`Academic Program: ${d.courseName}`, 20, 70);
+            doc.text(`UTME Score: ${d.score}`, 20, 80);
+            doc.text(`Registry Status: ${d.status}`, 20, 90);
+            doc.text(`Merit Pressure: ${d.pressure}`, 20, 100);
+            doc.text(doc.splitTextToSize(d.msg, 170), 20, 115);
 
-            // RESTORED: FULL PRAISE FOR MANAGEMENT
-            doc.setFillColor(245, 245, 245); doc.rect(20, 150, 170, 50, 'F');
+            // THE MANAGEMENT PRAISE
+            doc.setFillColor(245, 245, 245); doc.rect(20, 160, 170, 50, 'F');
             doc.setTextColor(10, 28, 60); doc.setFontSize(10);
-            doc.text("INSTITUTIONAL COMMENDATION", 105, 160, null, null, "center");
+            doc.text("OFFICIAL INSTITUTIONAL COMMENDATION", 105, 170, null, null, "center");
             doc.setFontSize(8);
             doc.text([
                 "The Olusegun Agagu University of Science and Technology (OAUSTECH) honors the visionary leadership",
-                "of the Ondo State Government for its tireless commitment to academic transformation. We applaud",
-                "the University Management and Governing Council for maintaining world-class standards",
-                "in Science, Technology, and the Blue Economy."
-            ], 105, 175, null, null, "center");
+                "of the Ondo State Government and the relentless dedication of the University Management. We applaud",
+                "the Governing Council for their commitment to excellence in the Blue Economy and academic innovation."
+            ], 105, 182, null, null, "center");
 
-            doc.setTextColor(150); doc.text("Zetra Silicon Valley Grade | WhatsApp: 08056604409", 105, 280, null, null, "center");
+            doc.setTextColor(150); doc.text("Zetra Silicon Valley Grade | Support: 08056604409 | 08060840326", 105, 280, null, null, "center");
             window.open(doc.output('bloburl'), '_blank');
         }
     </script>
 </body>
-    </html>
+</html>
