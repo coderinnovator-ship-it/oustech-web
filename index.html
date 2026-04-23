@@ -6,79 +6,46 @@
     <title>OAUSTECH | Institutional Merit Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
         :root { --oaustech-blue: #0A1C3C; --oaustech-red: #9B1C2A; --oaustech-gold: #F2B705; }
         body { background: var(--oaustech-blue); font-family: 'Plus Jakarta Sans', sans-serif; color: white; margin: 0; overflow-x: hidden; }
-        
-        /* Infinite Looping Ticker */
-        .ticker-container { background: #000; border-bottom: 2px solid var(--oaustech-gold); overflow: hidden; white-space: nowrap; padding: 12px 0; }
-        .ticker-content { display: inline-block; animation: scroll 40s linear infinite; }
-        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-        .card-glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-top: 5px solid var(--oaustech-red); transition: all 0.5s ease; }
-        .btn-official { background: var(--oaustech-red); border-bottom: 4px solid #7D1621; cursor: pointer; }
-        
+        .card-glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-top: 5px solid var(--oaustech-red); }
         #terminal { background: #000; font-family: 'Courier New', monospace; font-size: 10px; color: #00ff00; padding: 10px; border-radius: 8px; margin-top: 15px; border: 1px solid #333; display: none; }
-
-        /* Smooth Expand */
         #result { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.8s ease-in-out; }
         #result.active { max-height: 2000px; opacity: 1; margin-top: 1.5rem; }
-
-        .seal-main { width: 75px; height: 75px; background: white; border-radius: 50%; border: 3px solid var(--oaustech-gold); display: flex; align-items: center; justify-content: center; position: relative; }
-        .seal-orbit { position: absolute; width: 95px; height: 95px; border: 1px dashed var(--oaustech-gold); border-radius: 50%; animation: spin 12s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .disclaimer-box { background: rgba(155, 28, 42, 0.1); border: 1px solid var(--oaustech-red); padding: 12px; border-radius: 12px; font-size: 9px; line-height: 1.4; color: #ffb4b4; text-align: center; margin-top: 20px; }
-        .pulse-dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="flex flex-col items-center pb-20">
-
-    <div class="ticker-container w-full">
-        <div class="ticker-content text-[10px] font-bold text-yellow-400 uppercase tracking-widest">
-            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Cognitive Systems • </span>
-            <span>Building the Blue Economy • Excellence in Science & Technology • Official Registry Audit • Zetra Cognitive Systems • </span>
-        </div>
-    </div>
-
-    <div class="mt-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-        <span class="pulse-dot mr-2"></span> <span id="userCount">12</span> Students Currently Auditing
-    </div>
-
-    <header class="flex flex-col items-center mt-6 mb-4">
-        <div class="seal-main">
-            <div class="seal-orbit"></div>
-            <span class="text-blue-900 font-black text-xs">OAUS</span>
-        </div>
-        <h1 class="text-2xl font-black mt-4 uppercase">INSTITUTIONAL <span class="text-yellow-500">AUDIT</span></h1>
-    </header>
+<body class="flex flex-col items-center pb-20 pt-10">
 
     <main class="w-full max-w-sm px-4">
         <div class="card-glass rounded-[2.5rem] p-6 shadow-2xl">
-            <div class="space-y-5" id="inputContainer">
+            <h1 class="text-xl font-black mb-6 uppercase text-center">Institutional <span class="text-yellow-500">Merit Audit</span></h1>
+            
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">Faculty Registry</label>
-                    <select id="faculty" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-xs outline-none">
-                        <option value="220" data-alt="Public Health">Nursing / MLS</option>
-                        <option value="200" data-alt="Physics/Maths">Computing (CS / IT)</option>
-                        <option value="190" data-alt="Agric Engineering">Engineering & Tech</option>
-                        <option value="180" data-alt="Environmental Bio">Pure & Applied Sciences</option>
-                        <option value="170" data-alt="Accounting">Management Sciences</option>
-                        <option value="160" data-alt="Fisheries">Agriculture & Resources</option>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">JAMB Registration ID</label>
+                    <input type="text" id="jambNum" placeholder="e.g. 2026105544AB" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-xs outline-none uppercase font-mono">
+                </div>
+
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">Specific Department</label>
+                    <select id="course" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-white text-xs outline-none">
+                        <option value="225" data-alt="MLS or Public Health">Nursing Science</option>
+                        <option value="210" data-alt="Public Health or Biology">Medical Lab Science (MLS)</option>
+                        <option value="200" data-alt="Physics or Math">Computer Science</option>
+                        <option value="190" data-alt="Agric Engineering">Civil Engineering</option>
+                        <option value="180" data-alt="Fisheries">Biological Sciences</option>
+                        <option value="165" data-alt="None">Agriculture & Forestry</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">Verified UTME Score</label>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-2">UTME Score</label>
                     <input type="number" id="score" placeholder="000" class="w-full bg-slate-900 border border-slate-700 p-4 rounded-xl text-5xl font-black text-white text-center outline-none">
                 </div>
 
-                <button onclick="executeAudit()" class="w-full btn-official py-4 rounded-xl font-black text-[11px] tracking-[0.2em] uppercase">
-                    Execute Analysis
-                </button>
+                <button onclick="startRegistryAudit()" class="w-full bg-red-700 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase">Sync With Registry</button>
             </div>
 
             <div id="terminal"></div>
@@ -88,143 +55,97 @@
                 
                 <div class="mb-4">
                     <div class="flex justify-between text-[8px] font-bold uppercase mb-1">
-                        <span>Competition Density</span>
-                        <span id="densityText">0%</span>
+                        <span>Merit Pressure Index</span>
+                        <span id="pressureText">0%</span>
                     </div>
                     <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                        <div id="densityBar" class="h-full bg-yellow-500 transition-all duration-1000"></div>
+                        <div id="pressureBar" class="h-full transition-all duration-1000"></div>
                     </div>
                 </div>
 
-                <p id="msg" class="text-slate-300 text-xs font-medium leading-relaxed mb-6 italic"></p>
+                <p id="msg" class="text-slate-300 text-[11px] leading-relaxed mb-6"></p>
                 
-                <div id="securityStamp" class="text-[8px] font-mono text-slate-500 mb-6 border-t border-white/5 pt-4"></div>
-
-                <button onclick="generatePDF()" class="w-full bg-yellow-600 p-3 rounded-xl text-[10px] font-black uppercase tracking-widest">
-                    Download Formal Audit
-                </button>
+                <button onclick="generatePDF()" class="w-full bg-yellow-600 p-3 rounded-xl text-[10px] font-black uppercase tracking-widest">Formal Report</button>
             </div>
 
-            <div class="disclaimer-box">
-                <strong>OFFICIAL DISCLAIMER:</strong> This is an independent performance audit by Zetra Lab. This document is for advisory purposes. Final admission remains the prerogative of the University Senate and JAMB CAPS.
+            <div class="mt-6 p-3 border border-red-900/30 bg-red-900/10 rounded-xl text-[8px] text-center text-red-300">
+                <strong>LEGAL:</strong> Independent Zetra Audit. Final decisions reside with OAUSTECH Senate.
             </div>
         </div>
     </main>
 
-    <div class="w-full max-w-sm grid grid-cols-2 gap-3 px-4 mt-6">
-        <a href="https://wa.me/2348056604409" class="flex items-center justify-center gap-2 p-4 rounded-2xl bg-slate-900 border border-slate-800">
-            <i class="fa-brands fa-whatsapp text-green-500"></i>
-            <span class="text-[9px] font-bold uppercase">Zetra Help</span>
-        </a>
-        <a href="tel:+2348060840326" class="flex items-center justify-center gap-2 p-4 rounded-2xl bg-slate-900 border border-slate-800">
-            <i class="fa-solid fa-phone text-blue-500"></i>
-            <span class="text-[9px] font-bold uppercase">Registry Link</span>
-        </a>
-    </div>
-
     <script>
-        // High Variety Engine (1000+ Combinations)
-        const v_open = ["Good day. Audit initiated.", "Record retrieved successfully.", "Data authentication complete.", "Registry sync successful.", "Analysis window active."];
-        const v_mid_h = ["Your academic index is robust.", "Merit threshold successfully cleared.", "Statistical profile shows strength.", "Performance matches institutional benchmarks."];
-        const v_mid_l = ["Competition density is affecting status.", "Requirement variance detected.", "Current session index is highly competitive.", "Statistical pressure observed."];
-        const v_end_h = ["Institutional eligibility remains verified.", "Process alignment is confirmed.", "Registry suggests high suitability.", "Performance logs are positive."];
-        const v_end_l = ["Registry suggests advisory monitoring.", "Further assessment may be required.", "Eligibility status is under review.", "Alignment requires secondary validation."];
-
-        function executeAudit() {
+        function startRegistryAudit() {
+            const jamb = document.getElementById('jambNum').value;
             const score = document.getElementById('score').value;
-            if(!score) return;
             
+            // Fix: Strict JAMB validation
+            if(jamb.length < 10 || !/[a-zA-Z]/.test(jamb)) {
+                alert("Registry Error: Invalid JAMB Registration Format.");
+                return;
+            }
+
             const term = document.getElementById('terminal');
-            const resultBox = document.getElementById('result');
-            resultBox.classList.remove('active');
+            document.getElementById('result').classList.remove('active');
             term.style.display = 'block';
-            term.innerHTML = "";
+            term.innerHTML = "> Accessing Registry Database...<br>";
             
-            const lines = ["> Syncing Registry...", "> Validating UTME...", "> Calculating Merit Density...", "> Finalizing Verdict..."];
-            let i = 0;
-            const interval = setInterval(() => {
-                term.innerHTML += lines[i] + "<br>";
-                i++;
-                if(i >= lines.length) {
-                    clearInterval(interval);
-                    setTimeout(() => { term.style.display = 'none'; showResults(); }, 600);
-                }
-            }, 300);
+            setTimeout(() => term.innerHTML += "> Validating Candidate ID...<br>", 400);
+            setTimeout(() => term.innerHTML += "> Cross-referencing Course Quotas...<br>", 800);
+            setTimeout(() => {
+                term.style.display = 'none';
+                processResult();
+            }, 1400);
         }
 
-        function showResults() {
+        function processResult() {
             const score = parseInt(document.getElementById('score').value);
-            const select = document.getElementById('faculty');
+            const select = document.getElementById('course');
             const cutoff = parseInt(select.value);
-            const facultyName = select.options[select.selectedIndex].text;
+            const courseName = select.options[select.selectedIndex].text;
             const altCourse = select.options[select.selectedIndex].getAttribute('data-alt');
             
             const isQualified = score >= cutoff;
-            const open = v_open[Math.floor(Math.random()*v_open.length)];
-            const mid = isQualified ? v_mid_h[Math.floor(Math.random()*v_mid_h.length)] : v_mid_l[Math.floor(Math.random()*v_mid_l.length)];
-            const end = isQualified ? v_end_h[Math.floor(Math.random()*v_end_h.length)] : v_end_l[Math.floor(Math.random()*v_end_l.length)];
             
-            let finalMsg = `${open} ${mid} ${end}`;
-            if(!isQualified) finalMsg += ` Based on your ${score}, consider ${altCourse} as a strategic alternative.`;
+            // Fix: Logic Correction (Higher score = LOWER Pressure)
+            let pressure;
+            if(isQualified) {
+                pressure = Math.max(15, 60 - (score - cutoff)); 
+            } else {
+                pressure = Math.min(98, 75 + (cutoff - score));
+            }
 
-            document.getElementById('status').innerText = isQualified ? "ELIGIBILITY VERIFIED" : "ADVISORY REQUIRED";
-            document.getElementById('status').className = isQualified ? "text-green-500 text-lg font-black uppercase mb-4" : "text-yellow-500 text-lg font-black uppercase mb-4";
-            document.getElementById('msg').innerText = finalMsg;
+            const status = document.getElementById('status');
+            status.innerText = isQualified ? "ELIGIBILITY VERIFIED" : "ADVISORY REQUIRED";
+            status.className = isQualified ? "text-green-500 text-lg font-black" : "text-yellow-500 text-lg font-black";
+            
+            const bar = document.getElementById('pressureBar');
+            bar.style.width = pressure + "%";
+            bar.style.backgroundColor = pressure > 70 ? "#9B1C2A" : "#10B981";
+            document.getElementById('pressureText').innerText = pressure + "% PRESSURE";
 
-            // Density Logic
-            const density = isQualified ? Math.floor(40 + Math.random()*20) : Math.floor(80 + Math.random()*15);
-            document.getElementById('densityBar').style.width = density + "%";
-            document.getElementById('densityText').innerText = density + "% DENSITY";
-            document.getElementById('densityBar').style.backgroundColor = density > 80 ? "#9B1C2A" : "#F2B705";
+            let advice = isQualified 
+                ? `Registry confirms high alignment for ${courseName}. Performance is robust for the 2026 session.`
+                : `Registry suggests caution for ${courseName}. Given your score of ${score}, the system recommends exploring ${altCourse} as a strategic alternative.`;
 
-            // Security Stamp
-            const now = new Date();
-            document.getElementById('securityStamp').innerHTML = `AUDIT ID: ZTRA-${Math.floor(Math.random()*100000)}<br>TIMESTAMP: ${now.toLocaleDateString()} | ${now.toLocaleTimeString()} WAT`;
-
+            document.getElementById('msg').innerText = advice;
             document.getElementById('result').classList.add('active');
-            window.lastAudit = { score, facultyName, status: document.getElementById('status').innerText, msg: finalMsg, density: density + "%" };
+            window.lastAudit = { score, courseName, status: status.innerText, msg: advice, jamb: document.getElementById('jambNum').value };
         }
 
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const d = window.lastAudit;
-            
-            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 50, 'F');
-            doc.setTextColor(255); doc.setFontSize(18); doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 25, null, null, "center");
-            doc.setFontSize(9); doc.text("OFFICIAL PERFORMANCE ADVISORY - 2026 SESSION", 105, 35, null, null, "center");
-
-            doc.setTextColor(40); doc.setFontSize(11);
-            doc.text(`UTME Verified Score: ${d.score}`, 20, 65);
-            doc.text(`Academic Faculty: ${d.facultyName}`, 20, 75);
-            doc.text(`Registry Status: ${d.status}`, 20, 85);
-            doc.text(`Competition Density: ${d.density}`, 20, 95);
-
-            doc.setFontSize(10); doc.setTextColor(80);
+            doc.setFillColor(10, 28, 60); doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255); doc.text("OAUSTECH INSTITUTIONAL AUDIT", 105, 20, null, null, "center");
+            doc.setTextColor(40); doc.text(`ID: ${d.jamb}`, 20, 60);
+            doc.text(`Program: ${d.courseName}`, 20, 70);
+            doc.text(`Score: ${d.score}`, 20, 80);
+            doc.text(`Result: ${d.status}`, 20, 90);
             doc.text(doc.splitTextToSize(d.msg, 170), 20, 110);
-
-            // Institutional Praise
-            doc.setFillColor(245, 245, 245); doc.rect(20, 140, 170, 40, 'F');
-            doc.setTextColor(10, 28, 60); doc.text("INSTITUTIONAL COMMENDATION", 105, 150, null, null, "center");
-            doc.setFontSize(8); doc.text([
-                "OAUSTECH praises the visionary leadership of the Ondo State Government for its unwavering support.",
-                "We remain a citadel of innovation, driving society through science and blue economy transformation."
-            ], 105, 160, null, null, "center");
-
-            // Disclaimer Box
-            doc.setDrawColor(155, 28, 42); doc.rect(20, 200, 170, 30);
-            doc.setTextColor(155, 28, 42); doc.setFontSize(8); doc.text("LEGAL DISCLAIMER", 105, 208, null, null, "center");
-            doc.text(doc.splitTextToSize("This performance simulation is by Zetra Lab and is NOT an admission letter. The University Senate holds sole authority over admission results.", 160), 105, 216, null, null, "center");
-
-            doc.setTextColor(150); doc.text("Support: 08056604409 | Registry: 08060840326", 105, 280, null, null, "center");
             window.open(doc.output('bloburl'), '_blank');
         }
-
-        // Live User Pulse Simulation
-        setInterval(() => {
-            const count = 8 + Math.floor(Math.random() * 10);
-            document.getElementById('userCount').innerText = count;
-        }, 5000);
     </script>
 </body>
-                    </html>  
+    </html>
